@@ -1,6 +1,4 @@
-DROP database IF EXISTS data_safe;
-CREATE database IF NOT EXISTS data_safe;
-use data_safe;
+use icxp3_7;
 
 CREATE TABLE categoria (
 	nombre_cat VARCHAR(50) NOT NULL,
