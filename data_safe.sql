@@ -1,18 +1,23 @@
 USE icxp3_7;
 
 CREATE TABLE categoria (
+    id INT NOT NULL AUTO_INCREMENT,
 	nombre_cat VARCHAR(20) NOT NULL,
     sueldo_base FLOAT NOT NULL,
-    hora_extra FLOAT NOT NULL, PRIMARY KEY (nombre_cat) );
+    hora_extra FLOAT NOT NULL,
+    PRIMARY KEY (id) );
 
 CREATE TABLE sindicato (
-	nombre_sindicato VARCHAR(30) PRIMARY KEY,
-    cuota FLOAT );
+    id INT NOT NULL AUTO_INCREMENT,
+	nombre_sindicato VARCHAR(30) NOT NULL,
+    cuota FLOAT NOT NULL,
+    PRIMARY KEY (id) );
 
 CREATE TABLE ciudad (
+    id INT NOT NULL AUTO_INCREMENT,
 	nombre_ciudad VARCHAR(40) NOT NULL,
     num_habitantes INT NOT NULL,
-    PRIMARY KEY (nombre_ciudad) );
+    PRIMARY KEY (id) );
 
 CREATE TABLE empleado (
 	codigo_empleado VARCHAR(8) NOT NULL,
@@ -20,17 +25,18 @@ CREATE TABLE empleado (
     nss VARCHAR(20) NOT NULL,
     nombre VARCHAR (20) NOT NULL,
     apellido VARCHAR (20) NOT NULL,
-    nombre_cat VARCHAR(20) NOT NULL,
-    central VARCHAR(30) NULL,
-    ciudad_res VARCHAR(40) NOT NULL,
+    id_nombre_cat INT NOT NULL,
+    id_central INT NULL,
+    id_ciudad_res INT NOT NULL,
     PRIMARY KEY (codigo_empleado),
-    FOREIGN KEY (nombre_cat) REFERENCES categoria (nombre_cat),
-    FOREIGN KEY (central) REFERENCES sindicato (nombre_sindicato),
-    FOREIGN KEY (ciudad_res) REFERENCES ciudad (nombre_ciudad) );
+    FOREIGN KEY (id_nombre_cat) REFERENCES categoria (id),
+    FOREIGN KEY (id_central) REFERENCES sindicato (id),
+    FOREIGN KEY (id_ciudad_res) REFERENCES ciudad (id) );
 
 CREATE TABLE titulo (
+    id INT NOT NULL AUTO_INCREMENT,
     nombre_titulo VARCHAR (30) NOT NULL,
-    PRIMARY KEY (nombre_titulo));
+    PRIMARY KEY (id));
 
 CREATE TABLE fijo (
 	codigo_empleado VARCHAR(8) NOT NULL,
@@ -46,47 +52,50 @@ CREATE TABLE temporal (
     FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) );
 
 CREATE TABLE fecha (
+    id INT NOT NULL AUTO_INCREMENT,
     fecha DATETIME NOT NULL,
-    PRIMARY KEY (fecha) );
+    PRIMARY KEY (id) );
 
 CREATE TABLE agencia (
-	nombre_ciudad VARCHAR(30) NOT NULL,
-    nombre_agencia VARCHAR(30) NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+	id_ciudad INT NOT NULL,
+    nombre_agencia varchar(40) NOT NULL,
     direccion VARCHAR(100) NOT NULL,
     telefono INT,
-    PRIMARY KEY (nombre_agencia),
-    FOREIGN KEY (nombre_ciudad) REFERENCES ciudad (nombre_ciudad) );
+    PRIMARY KEY (id, id_ciudad),
+    FOREIGN KEY (id_ciudad) REFERENCES ciudad (id) );
 
 CREATE TABLE titulacion (
-	nombre_titulo VARCHAR(30) NOT NULL,
     codigo_empleado VARCHAR(8) NOT NULL,
-    FOREIGN KEY (nombre_titulo) REFERENCES titulo (nombre_titulo),
-    FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado) );
+	id_titulo INT NOT NULL,
+    PRIMARY KEY (codigo_empleado),
+    FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado),
+    FOREIGN KEY (id_titulo) REFERENCES titulo (id) );
 
 CREATE TABLE traslado (
 	codigo_empleado VARCHAR(8) NOT NULL,
+    id_fecha INT NOT NULL,
+    id_ciudad INT NOT NULL,
+    id_agencia INT NOT NULL,
+    fecha_fin DATETIME NOT NULL,
+    PRIMARY KEY(codigo_empleado),
     FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado),
-    fecha DATETIME NOT NULL,
-    FOREIGN KEY (fecha) REFERENCES fecha(fecha),
-    nombre_ciudad VARCHAR(30) NOT NULL,
-    FOREIGN KEY (nombre_ciudad) REFERENCES agencia(nombre_ciudad),
-    nombre_agencia VARCHAR(30) NOT NULL,
-    FOREIGN KEY (nombre_agencia) REFERENCES agencia(nombre_agencia),
-    PRIMARY KEY(codigo_empleado, fecha, nombre_ciudad, nombre_agencia),
-    fecha_fin DATETIME NOT NULL );
+    FOREIGN KEY (id_fecha) REFERENCES fecha(id),
+    FOREIGN KEY (id_agencia, id_ciudad) REFERENCES agencia(id, id_ciudad) );
 
 CREATE TABLE tipoprestamo (
+    id INT NOT NULL AUTO_INCREMENT,
 	codigo_prestamo VARCHAR(10) NOT NULL,
     tipo_interes REAL NOT NULL,
     vigencia DATETIME NOT NULL,
-    PRIMARY KEY (codigo_prestamo) ); 
+    PRIMARY KEY (id) ); 
 
 CREATE TABLE peticion (
 	codigo_empleado VARCHAR(8) NOT NULL,
-    codigo_prestamo VARCHAR(10) NOT NULL,
-    fecha DATETIME NOT NULL, 
-    UNIQUE (codigo_empleado, codigo_prestamo, fecha),
-    PRIMARY KEY (codigo_empleado, codigo_prestamo, fecha),
+    id_codigo_prestamo INT NOT NULL,
+    id_fecha INT NOT NULL, 
+    UNIQUE (codigo_empleado, id_codigo_prestamo, fecha),
+    PRIMARY KEY (codigo_empleado, id_codigo_prestamo, id_fecha),
     FOREIGN KEY (codigo_empleado) REFERENCES fijo(codigo_empleado),
-    FOREIGN KEY (codigo_prestamo) REFERENCES tipoprestamo(codigo_prestamo),
-    FOREIGN KEY (fecha) REFERENCES fecha(fecha) );
+    FOREIGN KEY (id_codigo_prestamo) REFERENCES tipoprestamo(id),
+    FOREIGN KEY (id_fecha) REFERENCES fecha(id) );
