@@ -1,4 +1,4 @@
-use icxp3_7;
+USE icxp3_7;
 
 CREATE TABLE categoria (
 	nombre_cat VARCHAR(50) NOT NULL,
