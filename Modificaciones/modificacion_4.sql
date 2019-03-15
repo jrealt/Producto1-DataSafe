@@ -1,7 +1,7 @@
 /* Usamos la base de datos icxp3_7 */
 USE icxp3_7;
 
-/* Añadimos email a la tabla EMPLEADO como clave única*/
+/* Añadimos email a la tabla empleado como clave única*/
 ALTER TABLE empleado ADD COLUMN email varchar(50) UNIQUE;
 ALTER TABLE empleado ADD UNIQUE (dni);
 
