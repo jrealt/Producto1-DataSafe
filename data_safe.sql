@@ -61,7 +61,7 @@ CREATE TABLE agencia (
     id_ciudad INT NOT NULL,
     nombre_agencia varchar(40) NOT NULL,
     direccion VARCHAR(100) NOT NULL,
-    telefono INT,
+    telefono VARCHAR(12),
     PRIMARY KEY (id, id_ciudad),
     FOREIGN KEY (id_ciudad) REFERENCES ciudad (id) );
 
