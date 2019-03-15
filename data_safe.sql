@@ -94,6 +94,7 @@ CREATE TABLE peticion (
     codigo_empleado VARCHAR(8) NOT NULL,
     id_codigo_prestamo INT NOT NULL,
     id_fecha INT NOT NULL, 
+    si_no TINYINT(1) NOT NULL,
     UNIQUE (codigo_empleado, id_codigo_prestamo, id_fecha),
     PRIMARY KEY (codigo_empleado, id_codigo_prestamo, id_fecha),
     FOREIGN KEY (codigo_empleado) REFERENCES fijo(codigo_empleado),
