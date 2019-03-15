@@ -130,8 +130,43 @@ INSERT INTO agencia (id_ciudad, nombre_agencia, telefono, calle, numero, piso, l
   (1, 'agencia_09', '+34641023160', 'alcala', 337, '7o', 'b', 28027),
   (3, 'agencia_10', '+34606170053', 'colon', 60, '5o', 'c', 46004);
 
-#traslado
+INSERT INTO traslado (codigo_empleado, id_fecha, id_ciudad, id_agencia, fecha_fin)
+  VALUES
+  ("jrm89012", 1, 2, 1, "2016-09-03"),
+  ("mgs91128", 2, 3, 2, "2015-12-29"),
+  ("jgr23778", 3, 1, 3, "2019-12-25"),
+  ("mgg12375", 4, 4, 4, "2015-04-05"),
+  ("rms10184", 5, 2, 5, "2018-09-22"),
+  ("crl38160", 6, 9, 6, "2013-09-09"),
+  ("clm03866", 7, 6, 7, "2018-03-30"),
+  ("mrr99583", 8, 5, 8, "2017-01-13"),
+  ("idi20862", 9, 1, 9, "2016-09-21"),
+  ("lap33670", 10, 3, 10, "2014-12-26");
 
-#tipoprestamo
 
-#peticion
+INSERT INTO tipoprestamo (codigo_prestamo, tipo_interes, vigencia)
+  VALUES
+  (1, 0.3, '2018-01-01 00:00:00'),
+  (2, 5.0, '2019-01-01 00:00:00'),
+  (3, 7.6, '2019-03-03 00:00:00'),
+  (4, 0.3, '2019-04-04 00:00:00'),
+  (5, 0.3, '2019-05-04 00:00:00'),
+  (6, 6.7, '2019-06-04 00:00:00'),
+  (7, 7.6, '2019-06-04 00:00:00'),
+  (8, 4.8, '2019-09-09 00:00:00'),
+  (9, 3.5, '2019-12-21 00:00:00'),
+  (10, 6.7, '2020-01-01 00:00:00');
+
+
+INSERT INTO peticion (codigo_empleado, id_codigo_prestamo, id_fecha, si_no)
+  VALUES
+  ('jrm89012', 1, 1, TRUE),
+  ('mgs91128', 2, 2, TRUE),
+  ('crl38160', 3, 3, TRUE),
+  ('jrm89012', 4, 4, TRUE),
+  ('jrm89012', 5, 5, TRUE),
+  ('lap33670', 6, 6, TRUE),
+  ('mrr99583', 7, 7, TRUE),
+  ('mgg12375', 8, 8, TRUE),
+  ('mrr99583', 9, 9, TRUE),
+  ('crl38160', 10, 10, TRUE);
