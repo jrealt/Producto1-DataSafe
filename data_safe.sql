@@ -42,14 +42,14 @@ CREATE TABLE fijo (
     codigo_empleado VARCHAR(8) NOT NULL,
     antiguedad DATETIME NOT NULL,
     PRIMARY KEY (codigo_empleado),
-    FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) );
+    FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE temporal (
     codigo_empleado VARCHAR(8) NOT NULL,
     fecha_inicio_cont DATETIME NOT NULL,
     fecha_fin_cont DATETIME NOT NULL,
     PRIMARY KEY (codigo_empleado),
-    FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) );
+    FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE fecha (
     id INT NOT NULL AUTO_INCREMENT,
