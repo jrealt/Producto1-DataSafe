@@ -29,9 +29,9 @@ CREATE TABLE empleado (
     id_central INT NULL,
     id_ciudad_res INT NOT NULL,
     PRIMARY KEY (codigo_empleado),
-    FOREIGN KEY (id_nombre_cat) REFERENCES categoria (id),
-    FOREIGN KEY (id_central) REFERENCES sindicato (id),
-    FOREIGN KEY (id_ciudad_res) REFERENCES ciudad (id) );
+    FOREIGN KEY (id_nombre_cat) REFERENCES categoria (id) ON UPDATE CASCADE ON DELETE CASCADE),
+    FOREIGN KEY (id_central) REFERENCES sindicato (id) ON UPDATE CASCADE ON DELETE CASCADE),
+    FOREIGN KEY (id_ciudad_res) REFERENCES ciudad (id) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE titulo (
     id INT NOT NULL AUTO_INCREMENT,
@@ -63,14 +63,14 @@ CREATE TABLE agencia (
     direccion VARCHAR(100) NOT NULL,
     telefono VARCHAR(12),
     PRIMARY KEY (id, id_ciudad),
-    FOREIGN KEY (id_ciudad) REFERENCES ciudad (id) );
+    FOREIGN KEY (id_ciudad) REFERENCES ciudad (id) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE titulacion (
     codigo_empleado VARCHAR(8) NOT NULL,
     id_titulo INT NOT NULL,
     PRIMARY KEY (codigo_empleado),
-    FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado),
-    FOREIGN KEY (id_titulo) REFERENCES titulo (id) );
+    FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE),
+    FOREIGN KEY (id_titulo) REFERENCES titulo (id) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE traslado (
     codigo_empleado VARCHAR(8) NOT NULL,
@@ -79,9 +79,9 @@ CREATE TABLE traslado (
     id_agencia INT NOT NULL,
     fecha_fin DATETIME NOT NULL,
     PRIMARY KEY(codigo_empleado),
-    FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado),
-    FOREIGN KEY (id_fecha) REFERENCES fecha(id),
-    FOREIGN KEY (id_agencia, id_ciudad) REFERENCES agencia(id, id_ciudad) );
+    FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE),
+    FOREIGN KEY (id_fecha) REFERENCES fecha(id) ON UPDATE CASCADE ON DELETE CASCADE),
+    FOREIGN KEY (id_agencia, id_ciudad) REFERENCES agencia(id, id_ciudad) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE tipoprestamo (
     id INT NOT NULL AUTO_INCREMENT,
@@ -97,6 +97,6 @@ CREATE TABLE peticion (
     si_no TINYINT(1) NOT NULL,
     UNIQUE (codigo_empleado, id_codigo_prestamo, id_fecha),
     PRIMARY KEY (codigo_empleado, id_codigo_prestamo, id_fecha),
-    FOREIGN KEY (codigo_empleado) REFERENCES fijo(codigo_empleado),
-    FOREIGN KEY (id_codigo_prestamo) REFERENCES tipoprestamo(id),
-    FOREIGN KEY (id_fecha) REFERENCES fecha(id) );
+    FOREIGN KEY (codigo_empleado) REFERENCES fijo(codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE),
+    FOREIGN KEY (id_codigo_prestamo) REFERENCES tipoprestamo(id) ON UPDATE CASCADE ON DELETE CASCADE),
+    FOREIGN KEY (id_fecha) REFERENCES fecha(id) ON UPDATE CASCADE ON DELETE CASCADE);
