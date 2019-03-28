@@ -8,7 +8,8 @@ USE icxp3_7;
 SELECT telefono FROM agencia WHERE telefono LIKE '+3491%';
 
 /* Mostrar los empleados fijos que tengan una antigüedad mayor a 5 años */
-SELECT empleado.codigo_empleado, empleado.nombre, empleado.apellido FROM empleado INNER JOIN fijo ON empleado.codigo_empleado = fijo.codigo_empleado 
+SELECT empleado.codigo_empleado, empleado.nombre, empleado.apellido FROM empleado 
+    INNER JOIN fijo ON empleado.codigo_empleado = fijo.codigo_empleado 
     WHERE fijo.antiguedad < DATE_SUB(CURDATE(), INTERVAL 5 YEAR);
 
 /* Mostrar la cuota del sindicato */
