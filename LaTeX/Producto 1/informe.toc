@@ -1,0 +1,10 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Definir la creaci\IeC {\'o}n de la base de datos, a partir del siguiente diagrama y anotar la sentencia SQL en un documento}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Definici\IeC {\'o}n y creaci\IeC {\'o}n}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Salida}{3}{subsection.1.2}
+\contentsline {section}{\numberline {2}Realizar las siguientes modificaciones a la estructura de la base de datos, anotar la sentencia SQL y su salida en un documento}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Modificaciones}{4}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Salida}{5}{subsection.2.2}
+\contentsline {section}{\numberline {3}Insertar un m\IeC {\'\i }nimo de 10 registros para cada tabla y anotar la sentencia SQL y su salida en un documento}{6}{section.3}
+\contentsline {subsection}{\numberline {3.1}Registros}{6}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Salida}{9}{subsection.3.2}

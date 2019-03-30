@@ -1,0 +1,23 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Ejercicio 1 - Realizar las siguientes consultas y anotar la sentencia SQL y su salida en un documento}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Dar el n\IeC {\'u}mero de agencias.}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Relaci\IeC {\'o}n de todos los empleados, se debe listar el DNI, apellido y el NSS, Ordenados por el apellido.}{1}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Relaci\IeC {\'o}n de todos los empleados, se debe listar el DNI, apellido y el NSS, Ordenados por el apellido.}{2}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Dar la relaci\IeC {\'o}n de los empleados que est\IeC {\'a}n en el sindicato.}{2}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Listar el sueldo base y el precio hora extra de cada categor\IeC {\'\i }a.}{3}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}Dar el n\IeC {\'u}mero de las agencias que est\IeC {\'a}n en Barcelona.}{3}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}Dar los tel\IeC {\'e}fonos de las agencias que empiezan con el prefijo 91.}{3}{subsection.1.7}
+\contentsline {subsection}{\numberline {1.8}Mostrar los empleados fijos que tengan una antig\IeC {\"u}edad mayor a 5 a\IeC {\~n}os.}{4}{subsection.1.8}
+\contentsline {subsection}{\numberline {1.9}Mostrar la cuota del sindicato.}{4}{subsection.1.9}
+\contentsline {subsection}{\numberline {1.10}Mostrar los empleados que se han trasladado en los \IeC {\'u}ltimos 2 a\IeC {\~n}os, y a la ciudad donde han ido. Ordenar por nombre del empleado.}{5}{subsection.1.10}
+\contentsline {subsection}{\numberline {1.11}Mostrar todas las peticiones de pr\IeC {\'e}stamo de los empleados.}{5}{subsection.1.11}
+\contentsline {subsection}{\numberline {1.12}Mostrar todas las peticiones de pr\IeC {\'e}stamo concedidas a los empleados.}{6}{subsection.1.12}
+\contentsline {subsection}{\numberline {1.13}Dar el trabajador con m\IeC {\'a}s peticiones de pr\IeC {\'e}stamo.}{6}{subsection.1.13}
+\contentsline {subsection}{\numberline {1.14}Formular una consulta que tenga una agrupaci\IeC {\'o}n con Group by.}{7}{subsection.1.14}
+\contentsline {subsection}{\numberline {1.15}Formular una consulta que tenga una agrupaci\IeC {\'o}n con Group by y un filtraje con having.}{7}{subsection.1.15}
+\contentsline {section}{\numberline {2}Ejercicio 2 - Realizar las siguientes modificaciones en los datos insertados y anotar la sentencia SQL y su salida en un documento}{8}{section.2}
+\contentsline {subsection}{\numberline {2.1}Cambia de nombre una titulaci\IeC {\'o}n.}{8}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Cambia el a\IeC {\~n}o de concesi\IeC {\'o}n de un pr\IeC {\'e}stamo.}{9}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Cambia el precio hora a la categor\IeC {\'\i }a base.}{9}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Elimina la ciudad de Valencia.}{10}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Elimina las ciudades que no tengan ning\IeC {\'u}n trabajador residiendo.}{10}{subsection.2.5}

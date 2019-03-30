@@ -1,0 +1,168 @@
+\section{Ejercicio 1 - Realizar las siguientes consultas y anotar la sentencia SQL y su salida en un documento}
+		
+	\subsection{Dar el número de agencias.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Dar el número de agencias. */
+			SELECT count(*) AS numero_agencias
+				FROM agencia; \end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1a.jpg}{scale=1}{0.5}{}
+	\subsection{Relación de todos los empleados, se debe listar el DNI, apellido y el NSS, Ordenados por el apellido.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Relación de todos los empleados, se debe listar el DNI, apellido y el NSS, Ordenados por el apellido. */
+			SELECT e.dni, e.apellido, e.nss FROM empleado AS e
+				ORDER BY e.apellido ASC;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1b.jpg}{scale=1}{0.5}{}
+\newpage
+	\subsection{Relación de todos los empleados, se debe listar el DNI, apellido y el NSS, Ordenados por el apellido.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Dar la relación de los empleados que tienen titulación. */
+			SELECT e.nombre, e.apellido, tt.nombre_titulo FROM empleado As e
+				INNER JOIN titulacion AS t ON t.codigo_empleado = e.codigo_empleado
+				INNER JOIN titulo AS tt ON tt.id = t.id_titulo;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1c.jpg}{scale=1}{0.5}{}
+	\subsection{Dar la relación de los empleados que están en el sindicato.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Dar la relación de los empleados que están en el sindicato. */
+			SELECT e.nombre, e.apellido, s.nombre_sindicato, s.cuota FROM empleado AS e
+				INNER JOIN sindicato AS s ON s.id = e.id_central;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1d.jpg}{scale=1}{0.5}{}	
+\newpage
+	\subsection{Listar el sueldo base y el precio hora extra de cada categoría.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Listar el sueldo base y el precio hora extra de cada categoría. */
+			SELECT c.nombre_cat, c.sueldo_base, c.hora_extra FROM categoria AS c;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1e.jpg}{scale=1}{0.5}{}
+	\subsection{Dar el número de las agencias que están en Barcelona.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Dar el número de las agencias que están en Barcelona. */
+			SELECT COUNT(a.id_ciudad) AS numero_de_agencias FROM agencia AS a 
+				INNER JOIN ciudad AS c ON c.id = a.id_ciudad
+				WHERE c.nombre_ciudad LIKE 'Barcelona';\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1f.jpg}{scale=1}{0.5}{}
+	\subsection{Dar los teléfonos de las agencias que empiezan con el prefijo 91.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Dar los teléfonos de las agencias que empiezan con el prefijo 91 */
+			SELECT a.telefono FROM agencia AS a 
+				WHERE a.telefono LIKE '+3491%';\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1g.jpg}{scale=1}{0.5}{}
+	\subsection{Mostrar los empleados fijos que tengan una antigüedad mayor a 5 años.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Mostrar los empleados fijos que tengan una antigüedad mayor a 5 años */
+			SELECT e.* FROM empleado AS e
+				INNER JOIN fijo AS f ON e.codigo_empleado = f.codigo_empleado 
+				WHERE f.antiguedad < DATE_SUB(CURDATE(), INTERVAL 5 YEAR);\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1h.jpg}{scale=0.8}{0.5}{}
+	\subsection{Mostrar la cuota del sindicato.} 
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Mostrar la cuota del sindicato */
+			SELECT e.*, s.cuota FROM empleado AS e
+				INNER JOIN fijo AS f ON e.codigo_empleado = f.codigo_empleado 
+				INNER JOIN sindicato AS s ON e.id_central = s.id
+				WHERE f.antiguedad < DATE_SUB(CURDATE(), INTERVAL 5 YEAR);\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1i2.jpg}{scale=0.8}{0.5}{}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Mostrar las cuotas de todos los sindicatos */
+			SELECT s.nombre_sindicato, s.cuota FROM sindicato AS s;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1i.jpg}{scale=0.85}{0.5}{}
+	\subsection{Mostrar los empleados que se han trasladado en los últimos 2 años, y a la ciudad donde han ido. Ordenar por nombre del empleado.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Mostrar los empleados que se han trasladado en los últimos 2 años, y a la ciudad donde han ido. Ordenar por nombre del empleado. */
+			SELECT e.codigo_empleado, e.nombre, e.apellido, c.nombre_ciudad FROM empleado AS e
+				INNER JOIN traslado AS t ON t.codigo_empleado = e.codigo_empleado
+				INNER JOIN ciudad AS c ON c.id = t.id_ciudad
+				INNER JOIN fecha AS f ON f.id = t.id_fecha
+				WHERE f.fecha > DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
+				ORDER BY e.nombre;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1j.jpg}{scale=1}{0.5}{}
+	\subsection{Mostrar todas las peticiones de préstamo de los empleados.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Mostrar todas las peticiones de préstamo de los empleados. */
+			SELECT e.codigo_empleado, e.nombre, e.apellido, f.fecha, p.si_no, t.tipo_interes, t.vigencia FROM empleado As e
+				INNER JOIN peticion AS p ON p.codigo_empleado = e.codigo_empleado
+				INNER JOIN fecha AS f ON f.id = p.id_fecha
+				INNER JOIN tipoprestamo AS t ON t.codigo_prestamo = p.id_codigo_prestamo;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1k.jpg}{scale=1}{0.5}{}
+\newpage
+	\subsection{Mostrar todas las peticiones de préstamo concedidas a los empleados.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Mostrar todas las peticiones de préstamo concedidas a los empleados. */
+			SELECT e.codigo_empleado, e.nombre, e.apellido, f.fecha, p.si_no, t.tipo_interes, t.vigencia FROM empleado As e
+				INNER JOIN peticion AS p ON p.codigo_empleado = e.codigo_empleado
+				INNER JOIN fecha AS f ON f.id = p.id_fecha
+				INNER JOIN tipoprestamo AS t ON t.codigo_prestamo = p.id_codigo_prestamo
+				WHERE p.si_no = 1;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1l.jpg}{scale=1}{0.5}{}
+	\subsection{Dar el trabajador con más peticiones de préstamo.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Dar el trabajador con más peticiones de préstamo. */
+			SELECT e.codigo_empleado, e.nombre, e.apellido, COUNT(p.codigo_empleado) AS np FROM empleado AS e
+				INNER JOIN peticion AS p ON e.codigo_empleado = p.codigo_empleado
+				GROUP BY codigo_empleado
+				ORDER BY np DESC
+				LIMIT 1;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1m.jpg}{scale=1}{0.5}{}
+\newpage
+	\subsection{Formular una consulta que tenga una agrupación con Group by.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Formular una consulta que tenga una agrupación con Group by. */
+			/* Cantidad de empleados que viven por ciudad */
+			SELECT c.nombre_ciudad, COUNT(e.id_ciudad_res) AS nc FROM ciudad AS c
+				INNER JOIN empleado AS e ON c.id = e.id_ciudad_res
+				GROUP BY nombre_ciudad
+				ORDER BY nc DESC;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1n.jpg}{scale=1}{0.5}{}
+	\subsection{Formular una consulta que tenga una agrupación con Group by y un filtraje con having.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Formular una consulta que tenga una agrupación con Group by y un filtraje con having. */
+			/* Empleados con sindicados que pagan una cuota mayor a 10 */
+			SELECT e.*, s.cuota FROM empleado AS e
+				INNER JOIN sindicato AS s ON e.id_central = s.id
+				GROUP BY s.cuota
+				HAVING s.cuota > 10;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/1o.jpg}{scale=0.75}{0.5}{}
+\section{Ejercicio 2 - Realizar las siguientes modificaciones en los datos insertados y anotar la sentencia SQL y su salida en un documento}
+		\newp Para deshabilitar \textit{Safe Update Mode} usamos:
+			\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+				/* Deshabilitamos safe mode update */
+				SET SQL_SAFE_UPDATES = 0;\end{sourcecodep}
+			\insertimageboxed[]{img/ejercicio2/sql_safe_updates_off.jpg}{scale=0.9}{0.5}{}
+		\newp Para habilitar \textit{Safe Update Mode} usamos:
+			\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+				/* Habilitamos safe mode update */
+				SET SQL_SAFE_UPDATES = 1;\end{sourcecodep}
+			\insertimageboxed[]{img/ejercicio2/sql_safe_updates_on.jpg}{scale=0.9}{0.5}{}
+	\subsection{Cambia de nombre una titulación.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* a. Cambia de nombre una titulación. */
+			UPDATE titulo 
+				SET nombre_titulo = 'E.S.O.' 
+				WHERE nombre_titulo LIKE 'ESO';\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio2/2a.jpg}{scale=1}{0.5}{}
+	\subsection{Cambia el año de concesión de un préstamo.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* b. Cambia el año de concesión de un préstamo. */
+			UPDATE fecha
+				SET fecha = DATE_SUB(fecha, INTERVAL 1 YEAR)
+				WHERE id = (SELECT p.id_fecha FROM peticion AS p
+				WHERE p.id_codigo_prestamo = 10);\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio2/2b.jpg}{scale=1}{0.5}{}
+	\subsection{Cambia el precio hora a la categoría base.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* c. Cambia el precio hora a la categoría base. */
+			UPDATE categoria 
+				SET sueldo_base=19 
+				WHERE id=1;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio2/2c.jpg}{scale=1}{0.5}{}
+\newpage
+	\subsection{Elimina la ciudad de Valencia.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* d. Elimina la ciudad de Valencia. */
+			DELETE FROM ciudad
+				WHERE nombre_ciudad LIKE 'Valencia';\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio2/2d.jpg}{scale=1}{0.5}{}
+	\subsection{Elimina las ciudades que no tengan ningún trabajador residiendo.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* e. Elimina las ciudades que no tengan ningún trabajador residiendo. */
+			DELETE FROM ciudad
+				WHERE id NOT IN (SELECT id_ciudad_res FROM empleado);\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio2/2e.jpg}{scale=1}{0.5}{}

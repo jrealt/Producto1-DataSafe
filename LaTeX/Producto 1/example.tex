@@ -1,0 +1,355 @@
+% Template:     Informe/Reporte LaTeX
+% Documento:    Archivo de ejemplo
+% Versión:      6.0.2 (22/10/2018)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R. @ppizarror
+%        Facultad de Ciencias Físicas y Matemáticas
+%        Universidad de Chile
+%        pablo.pizarro@ing.uchile.cl, ppizarror.com
+%
+% Manual template: [https://latex.ppizarror.com/Template-Informe/]
+% Licencia MIT:    [https://opensource.org/licenses/MIT/]
+
+% ------------------------------------------------------------------------------
+% NUEVA SECCIÓN
+% ------------------------------------------------------------------------------
+% Las secciones se inician con \section, si se quiere una sección sin número se
+% pueden usar las funciones \sectionanum (sección sin número) o la función
+% \sectionanumnoi para crear el mismo título sin numerar y sin aparecer en el índice.
+\section{Definir la creación de la base de datos, a partir del siguiente diagrama y anotar la sentencia SQL en un documento}
+	\subsection{Definición y creación}
+	\begin{sourcecodep}[]{sql}{extendedchars=true,basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{Archivo data\_safe.sql}
+		USE icxp3_7;
+		
+		CREATE TABLE categoria (
+		id INT NOT NULL AUTO_INCREMENT,
+		nombre_cat VARCHAR(20) NOT NULL,
+		sueldo_base FLOAT NOT NULL,
+		hora_extra FLOAT NOT NULL,
+		PRIMARY KEY (id) );
+		
+		CREATE TABLE sindicato (
+		id INT NOT NULL AUTO_INCREMENT,
+		nombre_sindicato VARCHAR(30) NOT NULL,
+		cuota FLOAT NOT NULL,
+		PRIMARY KEY (id) );
+		
+		CREATE TABLE ciudad (
+		id INT NOT NULL AUTO_INCREMENT,
+		nombre_ciudad VARCHAR(40) NOT NULL,
+		num_habitantes INT NOT NULL,
+		PRIMARY KEY (id) );
+		
+		CREATE TABLE empleado (
+		codigo_empleado VARCHAR(8) NOT NULL,
+		dni VARCHAR(10) NOT NULL,
+		nss VARCHAR(20) NOT NULL,
+		nombre VARCHAR (20) NOT NULL,
+		apellido VARCHAR (20) NOT NULL,
+		id_nombre_cat INT NOT NULL,
+		id_central INT NULL,
+		id_ciudad_res INT NOT NULL,
+		PRIMARY KEY (codigo_empleado),
+		FOREIGN KEY (id_nombre_cat) REFERENCES categoria (id),
+		FOREIGN KEY (id_central) REFERENCES sindicato (id),
+		FOREIGN KEY (id_ciudad_res) REFERENCES ciudad (id) );
+		
+		CREATE TABLE titulo (
+		id INT NOT NULL AUTO_INCREMENT,
+		nombre_titulo VARCHAR (30) NOT NULL,
+		PRIMARY KEY (id));
+		
+		CREATE TABLE fijo (
+		codigo_empleado VARCHAR(8) NOT NULL,
+		antiguedad DATETIME NOT NULL,
+		PRIMARY KEY (codigo_empleado),
+		FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) );
+		
+		CREATE TABLE temporal (
+		codigo_empleado VARCHAR(8) NOT NULL,
+		fecha_inicio_cont DATETIME NOT NULL,
+		fecha_fin_cont DATETIME NOT NULL,
+		PRIMARY KEY (codigo_empleado),
+		FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) );
+		
+		CREATE TABLE fecha (
+		id INT NOT NULL AUTO_INCREMENT,
+		fecha DATETIME NOT NULL,
+		PRIMARY KEY (id) );
+		
+		CREATE TABLE agencia (
+		id INT NOT NULL AUTO_INCREMENT,
+		id_ciudad INT NOT NULL,
+		nombre_agencia varchar(40) NOT NULL,
+		direccion VARCHAR(100) NOT NULL,
+		telefono VARCHAR(12),
+		PRIMARY KEY (id, id_ciudad),
+		FOREIGN KEY (id_ciudad) REFERENCES ciudad (id) );
+		
+		CREATE TABLE titulacion (
+		codigo_empleado VARCHAR(8) NOT NULL,
+		id_titulo INT NOT NULL,
+		PRIMARY KEY (codigo_empleado),
+		FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado),
+		FOREIGN KEY (id_titulo) REFERENCES titulo (id) );
+		
+		CREATE TABLE traslado (
+		codigo_empleado VARCHAR(8) NOT NULL,
+		id_fecha INT NOT NULL,
+		id_ciudad INT NOT NULL,
+		id_agencia INT NOT NULL,
+		fecha_fin DATETIME NOT NULL,
+		PRIMARY KEY(codigo_empleado),
+		FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado),
+		FOREIGN KEY (id_fecha) REFERENCES fecha(id),
+		FOREIGN KEY (id_agencia, id_ciudad) REFERENCES agencia(id, id_ciudad) );
+		
+		CREATE TABLE tipoprestamo (
+		id INT NOT NULL AUTO_INCREMENT,
+		codigo_prestamo VARCHAR(10) NOT NULL,
+		tipo_interes REAL NOT NULL,
+		vigencia DATETIME NOT NULL,
+		PRIMARY KEY (id) ); 
+		
+		CREATE TABLE peticion (
+		codigo_empleado VARCHAR(8) NOT NULL,
+		id_codigo_prestamo INT NOT NULL,
+		id_fecha INT NOT NULL, 
+		si_no TINYINT(1) NOT NULL,
+		UNIQUE (codigo_empleado, id_codigo_prestamo, id_fecha),
+		PRIMARY KEY (codigo_empleado, id_codigo_prestamo, id_fecha),
+		FOREIGN KEY (codigo_empleado) REFERENCES fijo(codigo_empleado),
+		FOREIGN KEY (id_codigo_prestamo) REFERENCES tipoprestamo(id),
+		FOREIGN KEY (id_fecha) REFERENCES fecha(id) );\end{sourcecodep}
+		\subsection{Salida}
+		\insertimageboxed[]{img/01.png}{scale=0.3}{0.5}{Salida definición y creación de la base de datos}
+		
+\newpage
+\section{Realizar las siguientes modificaciones a la estructura de la base de datos, anotar la sentencia SQL y su salida en un documento}
+	\subsection{Modificaciones}
+		\begin{sourcecodep}[]{sql}{extendedchars=true,basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{Archivo modificacion\_1.sql}
+			/* Usamos la base de datos icxp3_7 */
+			USE icxp3_7;
+			/* Modificamos la columna nombre_titulo de la tabla titulo */
+			ALTER TABLE titulo MODIFY nombre_titulo VARCHAR(20) NOT NULL;\end{sourcecodep}
+		\begin{sourcecodep}[]{sql}{extendedchars=true,basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{Archivo modificacion\_2.sql}
+			/* Usamos la base de datos icxp3_7 */
+			USE icxp3_7;
+			/* Añadimos numero a la tabla titulo */
+			ALTER TABLE titulo ADD COLUMN numero NUMERIC;\end{sourcecodep}
+		\begin{sourcecodep}[]{sql}{extendedchars=true,basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{Archivo modificacion\_3.sql}
+			/* Usamos la base de datos icxp3_7 */
+			USE icxp3_7;
+			/* Añadimos nss como clave única */
+			ALTER TABLE empleado ADD UNIQUE(nss);\end{sourcecodep}
+		\begin{sourcecodep}[]{sql}{extendedchars=true,basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{Archivo modificacion\_4.sql}
+			
+			/* Usamos la base de datos icxp3_7 */
+			USE icxp3_7;
+			
+			/* Añadimos email a la tabla empleado como clave única*/
+			ALTER TABLE empleado ADD COLUMN email varchar(50) UNIQUE;
+			ALTER TABLE empleado ADD UNIQUE (dni);
+			
+			/* Eliminamos la columna dirección de la tabla agencia */
+			ALTER TABLE agencia DROP COLUMN direccion;
+			/* Añadimos la columna calle a la tabla agencia */
+			ALTER TABLE agencia ADD COLUMN calle VARCHAR(30);
+			/* Añadimos la columna numero a la tabla agencia */
+			ALTER TABLE agencia ADD COLUMN numero VARCHAR(4);
+			/* Añadimos la columna piso a la tabla agencia */
+			ALTER TABLE agencia ADD COLUMN piso VARCHAR(3);
+			/* Añadimos la columna letra a la tabla agencia */
+			ALTER TABLE agencia ADD COLUMN letra VARCHAR(2);
+			/* Añadimos la columna cp a la tabla agencia */
+			ALTER TABLE agencia ADD COLUMN cp VARCHAR(10);\end{sourcecodep}
+\newpage
+		\begin{sourcecodep}[]{sql}{extendedchars=true,basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{Archivo modificacion\_5.sql}
+			/* Usamos la base de datos icxp3_7 */
+			USE icxp3_7;
+			/* Añadimos telefono_movil a la tabla empleado como clave única*/
+			ALTER TABLE empleado ADD COLUMN telefono_movil VARCHAR(12) UNIQUE;\end{sourcecodep}
+	\subsection{Salida}
+		\insertimageboxed[]{img/02.png}{scale=0.3}{0.5}{Salida de la modificación 1}
+		\insertimageboxed[]{img/03.png}{scale=0.3}{0.5}{Salida de la modificación 2}
+		\insertimageboxed[]{img/04.png}{scale=0.3}{0.5}{Salida de la modificación 3}
+		\insertimageboxed[]{img/05.png}{scale=0.3}{0.5}{Salida de la modificación 4}
+		\insertimageboxed[]{img/06.png}{scale=0.3}{0.5}{Salida de la modificación 5}
+\section{Insertar un mínimo de 10 registros para cada tabla y anotar la sentencia SQL y su salida en un documento}
+	\subsection{Registros}
+		\begin{sourcecodep}[]{sql}{extendedchars=true,basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{Archivo registros.sql}
+		USE icxp3_7;
+		
+		INSERT INTO categoria (nombre_cat, sueldo_base, hora_extra)
+		VALUES 
+		('categoria_01', 12.00, 18.00),
+		('categoria_02', 8.00, 12.00),
+		('categoria_03', 7.88, 11.82),
+		('categoria_04', 9.50, 14.25),
+		('categoria_05', 10.00, 15.00),
+		('categoria_06', 6.50, 9.75),
+		('categoria_07', 6.50, 9.75),
+		('categoria_08', 10.00, 15.00),
+		('categoria_09', 14.5, 21.75),
+		('categoria_10', 7.8, 11.70);
+		
+		INSERT INTO sindicato (nombre_sindicato, cuota)
+		VALUES 
+		("UGT", 13.00),
+		("CCOO", 14.00),
+		("CNT", 9.00),
+		("CGT", 10.00),
+		("SAT", 11.00),
+		("COS", 12.00),
+		("LAB", 12.5),
+		("SO", 8.5),
+		("AST", 8.00),
+		("CIG", 10.5);
+		
+		INSERT INTO ciudad (nombre_ciudad, num_habitantes)
+		VALUES 
+		('Madrid', 3223334),
+		('Barcelona', 1620343),
+		('Valencia', 791413),
+		('Sevilla', 688711),
+		('Zaragoza', 666880),
+		('Malaga', 571026),
+		('Murcia', 447182),
+		('Palma', 409661),
+		('Bilbao', 345821),
+		('Alicante', 331577);
+		
+		INSERT INTO empleado (codigo_empleado, dni, nss, nombre, apellido, id_nombre_cat, id_central, id_ciudad_res, email, telefono_movil)
+		VALUES 
+		('jrm89012', '45678844M', '2812345678', 'Juan', 'Rodríguez', 1, 1, 1, 'jrodriguez@gmail.com', '659278576'),
+		('mgs91128', '87977552P', '7279560804', 'Marcos', 'Gómez', 2, 4, 5, 'mgomez@gmail.com', '678334566'),
+		('jgr23778', '38923235G', '5437635590', 'José', 'García', 7, 5, 2, 'jgarcia@gmail.com', '665812239'),
+		('mgg12375', '89234713M', '3732997415', 'María', 'González', 4, 7, 8, 'mgonzalez@gmail.com', '653389124'),
+		('rms10184', '94571879U', '3696581102', 'Roger', 'Martín', 8, 6, 9, 'rmartin@gmail.com', '698470415'),
+		('crl38160', '39573446T', '7821437691', 'Carmen', 'Ruiz', 9, 9, 7, 'cruiz@gmail.com', '622196890'),
+		('clm03866', '30583199O', '8832780416', 'Claudia', 'López', 6, 2, 3, 'clopez@gmail.com', '6981612067'),
+		('mrr99583', '43597258K', '2237984169', 'Mario', 'Ramos', 3, 8, 4, 'mramos@gmail.com', '672830755'),
+		('idi20862', '65489902L', '2021125989', 'Isabel', 'Díaz', 5, 3, 6, 'idiaz@gmail.com', '680026491'),
+		('lap33670', '19983245Y', '7026518657', 'Laura', 'Álvarez', 10, 10, 10, 'lalvarez@gmail.com', '605367199');
+		
+		INSERT INTO titulo (nombre_titulo, numero)
+		VALUES 
+		('ESO', 3000),
+		('Bachiller', 4000),
+		('CFGS_DAM', 5000),
+		('CFGS_DAW', 5001),
+		('CFGS_ASIR', 5002),
+		('CFGS_AF', 6000),
+		('CFGS_MP', 7000),
+		('CFGS_GVEC', 8000),
+		('G_ADE', 12000),
+		('G_II', 13000);
+		
+		INSERT INTO titulacion (codigo_empleado, id_titulo)
+		VALUES 
+		('jrm89012', 1),
+		('mgs91128', 2),
+		('jgr23778', 3),
+		('mgg12375', 4),
+		('rms10184', 5),
+		('crl38160', 6),
+		('clm03866', 7),
+		('mrr99583', 8),
+		('idi20862', 9),
+		('lap33670', 10);
+		
+		INSERT INTO fijo (codigo_empleado, antiguedad)
+		VALUES 
+		('jrm89012', '2012-07-24'),
+		('mgs91128', '2013-11-04'),
+		('jgr23778', '2015-06-08'),
+		('mgg12375', '2013-10-16'),
+		('rms10184', '2016-01-07'),
+		('crl38160', '2013-05-21'),
+		('clm03866', '2017-06-15'),
+		('mrr99583', '2015-09-02'),
+		('idi20862', '2013-12-05'),
+		('lap33670', '2014-08-12');
+		
+		INSERT INTO temporal (codigo_empleado, fecha_inicio_cont, fecha_fin_cont)
+		VALUES 
+		('jrm89012', '2012-07-24', '2013-01-25'),
+		('mgs91128', '2013-11-04', '2014-05-05'),
+		('jgr23778', '2015-06-08', '2017-06-09'),
+		('mgg12375', '2013-10-16', '2014-04-17'),
+		('rms10184', '2016-01-07', '2016-07-08'),
+		('crl38160', '2013-05-21', '2015-05-22'),
+		('clm03866', '2017-06-15', '2017-12-16'),
+		('mrr99583', '2015-09-02', '2016-03-03'),
+		('idi20862', '2013-12-05', '2013-06-06'),
+		('lap33670', '2014-08-12', '2016-08-13');
+		
+		INSERT INTO fecha (fecha)
+		VALUES 
+		('2016-07-24'),
+		('2015-09-16'),
+		('2019-10-08'),
+		('2014-12-21'),
+		('2018-04-13'),
+		('2013-07-10'),
+		('2017-03-09'),
+		('2016-05-05'),
+		('2015-09-19'),
+		('2014-11-02');
+		
+		INSERT INTO agencia (id_ciudad, nombre_agencia, telefono, calle, numero, piso, letra, cp)
+		VALUES 
+		(2, 'agencia_01', '+34656237041', 'aribau', 106, '3o', 'a', 08036),
+		(3, 'agencia_02', '+34696321045', 'quart', 15, '2o', 'a', 46001),
+		(1, 'agencia_03', '+34674125952', 'lagasca', 67, '4o', 'b', 28001),
+		(4, 'agencia_04', '+34600256341', 'campamento', 10, '1o', 'a', 41018),
+		(2, 'agencia_05', '+34696753421', 'balmes', 209, '5o', 'd', 08006),
+		(9, 'agencia_06', '+34670022002', 'cortes', 107, '3o', 'b', 48003),
+		(6, 'agencia_07', '+34693414141', 'pelayo', 77, '5o', 'a', 29009),
+		(5, 'agencia_08', '+34609360214', 'coso', 86, '2o', 'c', 50001),
+		(1, 'agencia_09', '+34641023160', 'alcala', 337, '7o', 'b', 28027),
+		(3, 'agencia_10', '+34606170053', 'colon', 60, '5o', 'c', 46004);
+		
+		INSERT INTO traslado (codigo_empleado, id_fecha, id_ciudad, id_agencia, fecha_fin)
+		VALUES
+		("jrm89012", 1, 2, 1, "2016-09-03"),
+		("mgs91128", 2, 3, 2, "2015-12-29"),
+		("jgr23778", 3, 1, 3, "2019-12-25"),
+		("mgg12375", 4, 4, 4, "2015-04-05"),
+		("rms10184", 5, 2, 5, "2018-09-22"),
+		("crl38160", 6, 9, 6, "2013-09-09"),
+		("clm03866", 7, 6, 7, "2018-03-30"),
+		("mrr99583", 8, 5, 8, "2017-01-13"),
+		("idi20862", 9, 1, 9, "2016-09-21"),
+		("lap33670", 10, 3, 10, "2014-12-26");
+		
+		
+		INSERT INTO tipoprestamo (codigo_prestamo, tipo_interes, vigencia)
+		VALUES
+		(1, 0.3, '2018-01-01 00:00:00'),
+		(2, 5.0, '2019-01-01 00:00:00'),
+		(3, 7.6, '2019-03-03 00:00:00'),
+		(4, 0.3, '2019-04-04 00:00:00'),
+		(5, 0.3, '2019-05-04 00:00:00'),
+		(6, 6.7, '2019-06-04 00:00:00'),
+		(7, 7.6, '2019-06-04 00:00:00'),
+		(8, 4.8, '2019-09-09 00:00:00'),
+		(9, 3.5, '2019-12-21 00:00:00'),
+		(10, 6.7, '2020-01-01 00:00:00');
+		
+		
+		INSERT INTO peticion (codigo_empleado, id_codigo_prestamo, id_fecha, si_no)
+		VALUES
+		('jrm89012', 1, 1, TRUE),
+		('mgs91128', 2, 2, TRUE),
+		('crl38160', 3, 3, TRUE),
+		('jrm89012', 4, 4, TRUE),
+		('jrm89012', 5, 5, TRUE),
+		('lap33670', 6, 6, TRUE),
+		('mrr99583', 7, 7, TRUE),
+		('mgg12375', 8, 8, TRUE),
+		('mrr99583', 9, 9, TRUE),
+		('crl38160', 10, 10, TRUE);\end{sourcecodep}
+	\subsection{Salida}
+		\insertimageboxed[]{img/07.png}{scale=0.3}{0.5}{Salida registro de datos}
