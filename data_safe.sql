@@ -27,11 +27,11 @@ CREATE TABLE IF NOT EXISTS empleado (
     apellido VARCHAR (20) NOT NULL,
     id_nombre_cat INT NOT NULL,
     id_central INT NULL,
-    id_ciudad_res INT NOT NULL,
+    id_ciudad_res INT NULL,
     PRIMARY KEY (codigo_empleado),
     FOREIGN KEY (id_nombre_cat) REFERENCES categoria (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (id_central) REFERENCES sindicato (id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY (id_ciudad_res) REFERENCES ciudad (id) ON UPDATE CASCADE ON DELETE RESTRICT);
+    FOREIGN KEY (id_ciudad_res) REFERENCES ciudad (id) ON UPDATE CASCADE ON DELETE SET NULL);
 
 CREATE TABLE IF NOT EXISTS titulo (
     id INT NOT NULL AUTO_INCREMENT,
@@ -63,25 +63,25 @@ CREATE TABLE IF NOT EXISTS agencia (
     direccion VARCHAR(100) NOT NULL,
     telefono VARCHAR(12),
     PRIMARY KEY (id, id_ciudad),
-    FOREIGN KEY (id_ciudad) REFERENCES ciudad (id) ON UPDATE CASCADE ON DELETE RESTRICT);
+    FOREIGN KEY (id_ciudad) REFERENCES ciudad (id) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE IF NOT EXISTS titulacion (
     codigo_empleado VARCHAR(8) NOT NULL,
     id_titulo INT NOT NULL,
     PRIMARY KEY (codigo_empleado),
-    FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (id_titulo) REFERENCES titulo (id) ON UPDATE CASCADE ON DELETE RESTRICT);
 
 CREATE TABLE IF NOT EXISTS traslado (
     codigo_empleado VARCHAR(8) NOT NULL,
     id_fecha INT NOT NULL,
-    id_ciudad INT NOT NULL,
-    id_agencia INT NOT NULL,
+    id_ciudad INT NULL,
+    id_agencia INT NULL,
     fecha_fin DATETIME NOT NULL,
     PRIMARY KEY(codigo_empleado),
     FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (id_fecha) REFERENCES fecha(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY (id_agencia, id_ciudad) REFERENCES agencia(id, id_ciudad) ON UPDATE CASCADE ON DELETE RESTRICT);
+    FOREIGN KEY (id_agencia, id_ciudad) REFERENCES agencia(id, id_ciudad) ON UPDATE CASCADE ON DELETE SET NULL);
 
 CREATE TABLE IF NOT EXISTS tipoprestamo (
     id INT NOT NULL AUTO_INCREMENT,
