@@ -1,4 +1,6 @@
 USE icxp3_7;
+/* Deshabilitamos safe mode update */
+SET SQL_SAFE_UPDATES = 0;
 /* a. Cambia de nombre una titulación. */
 UPDATE titulo 
     SET nombre_titulo = 'E.S.O.' 
@@ -22,3 +24,6 @@ DELETE FROM ciudad
 /* e. Elimina las ciudades que no tengan ningún trabajador residiendo. */
 DELETE FROM ciudad
     WHERE id NOT IN (SELECT id_ciudad_res FROM empleado);
+
+/* Habilitamos safe mode update */
+SET SQL_SAFE_UPDATES = 1;
