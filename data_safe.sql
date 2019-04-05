@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS traslado (
     id_ciudad INT NULL,
     id_agencia INT NULL,
     fecha_fin DATETIME NOT NULL,
-    PRIMARY KEY(codigo_empleado),
+    PRIMARY KEY(codigo_empleado, id_fecha),
     FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (id_fecha) REFERENCES fecha(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (id_agencia, id_ciudad) REFERENCES agencia(id, id_ciudad) ON UPDATE CASCADE ON DELETE SET NULL);
