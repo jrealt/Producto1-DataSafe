@@ -41,16 +41,16 @@ INSERT INTO ciudad (nombre_ciudad, num_habitantes)
 
 INSERT INTO empleado (codigo_empleado, dni, nss, nombre, apellido, id_nombre_cat, id_central, id_ciudad_res, email, telefono_movil)
   VALUES 
-  ('jrm89012', '45678844M', '2812345678', 'Juan', 'Rodríguez', 1, 1, 1, 'jrodriguez@gmail.com', '659278576'),
-  ('mgs91128', '87977552P', '7279560804', 'Marcos', 'Gómez', 2, 4, 5, 'mgomez@gmail.com', '678334566'),
-  ('jgr23778', '38923235G', '5437635590', 'José', 'García', 7, 5, 2, 'jgarcia@gmail.com', '665812239'),
-  ('mgg12375', '89234713M', '3732997415', 'María', 'González', 4, 7, 8, 'mgonzalez@gmail.com', '653389124'),
-  ('rms10184', '94571879U', '3696581102', 'Roger', 'Martín', 8, 6, 9, 'rmartin@gmail.com', '698470415'),
-  ('crl38160', '39573446T', '7821437691', 'Carmen', 'Ruiz', 9, 9, 7, 'cruiz@gmail.com', '622196890'),
-  ('clm03866', '30583199O', '8832780416', 'Claudia', 'López', 6, 2, 3, 'clopez@gmail.com', '6981612067'),
-  ('mrr99583', '43597258K', '2237984169', 'Mario', 'Ramos', 3, 8, 4, 'mramos@gmail.com', '672830755'),
-  ('idi20862', '65489902L', '2021125989', 'Isabel', 'Díaz', 5, 3, 6, 'idiaz@gmail.com', '680026491'),
-  ('lap33670', '19983245Y', '7026518657', 'Laura', 'Álvarez', 10, 10, 10, 'lalvarez@gmail.com', '605367199');
+  ('jrm89012', '45678844M', '2812345678', 'Juan', 'Rodríguez', 1, 1, 1, 'jrodriguez@gmail.com', '+34659278576'),
+  ('mgs91128', '87977552P', '7279560804', 'Marcos', 'Gómez', 2, 4, 5, 'mgomez@gmail.com', '+34678334566'),
+  ('jgr23778', '38923235G', '5437635590', 'José', 'García', 7, 5, 2, 'jgarcia@gmail.com', '+34665812239'),
+  ('mgg12375', '89234713M', '3732997415', 'María', 'González', 4, 7, 8, 'mgonzalez@gmail.com', '+34653389124'),
+  ('rms10184', '94571879U', '3696581102', 'Roger', 'Martín', 8, 6, 9, 'rmartin@gmail.com', '+34698470415'),
+  ('crl38160', '39573446T', '7821437691', 'Carmen', 'Ruiz', 9, 9, 7, 'cruiz@gmail.com', '+34622196890'),
+  ('clm03866', '30583199O', '8832780416', 'Claudia', 'López', 6, 2, 3, 'clopez@gmail.com', '+346981612067'),
+  ('mrr99583', '43597258K', '2237984169', 'Mario', 'Ramos', 3, 8, 4, 'mramos@gmail.com', '+34672830755'),
+  ('idi20862', '65489902L', '2021125989', 'Isabel', 'Díaz', 5, 3, 6, 'idiaz@gmail.com', '+34680026491'),
+  ('lap33670', '19983245Y', '7026518657', 'Laura', 'Álvarez', 10, 10, 10, 'lalvarez@gmail.com', '+34605367199');
 
 INSERT INTO titulo (nombre_titulo, numero)
   VALUES 
