@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS titulacion (
     codigo_empleado VARCHAR(8) NOT NULL,
     id_titulo INT NOT NULL,
     PRIMARY KEY (codigo_empleado),
-    FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_titulo) REFERENCES titulo (id) ON UPDATE CASCADE ON DELETE RESTRICT);
 
 CREATE TABLE IF NOT EXISTS traslado (
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS traslado (
     id_agencia INT NULL,
     fecha_fin DATETIME NOT NULL,
     PRIMARY KEY(codigo_empleado, id_fecha),
-    FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (codigo_empleado) REFERENCES empleado(codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_fecha) REFERENCES fecha(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (id_agencia, id_ciudad) REFERENCES agencia(id, id_ciudad) ON UPDATE CASCADE ON DELETE SET NULL);
 
@@ -97,6 +97,6 @@ CREATE TABLE IF NOT EXISTS peticion (
     si_no TINYINT(1) NOT NULL,
     UNIQUE (codigo_empleado, id_codigo_prestamo, id_fecha),
     PRIMARY KEY (codigo_empleado, id_codigo_prestamo, id_fecha),
-    FOREIGN KEY (codigo_empleado) REFERENCES fijo(codigo_empleado) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (codigo_empleado) REFERENCES fijo(codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_codigo_prestamo) REFERENCES tipoprestamo(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (id_fecha) REFERENCES fecha(id) ON UPDATE CASCADE ON DELETE RESTRICT);
