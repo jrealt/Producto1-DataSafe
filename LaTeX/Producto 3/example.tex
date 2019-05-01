@@ -1,1 +1,218 @@
-\section{}
+\section{Registros}
+\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+	INSERT INTO empleado (codigo_empleado, dni, nss, nombre, apellido, id_nombre_cat, id_central, id_ciudad_res, email, telefono_movil)
+	VALUES 
+		('ppm80832', '45215844M', '2812645678', 'Pablo', 'Perez', 1, 1, 1, 'pperez@gmail.com', '+34659223176'),
+		('ars11234', '36584125P', '7279568404', 'Ana', 'Rio', 2, 4, 5, 'ario@gmail.com', '+34674734566'),
+		('lcs52675', '15426895P', '7364952675', 'Laura', 'Caceres', 2, 4, 5, 'lcac@gmail.com', '+34678956432'),
+		('gtp56984', '95683452P', '7568941568', 'Gregorio', 'Trapero', 5, 3, 5, 'gregt@gmail.com', '+34915869256'),
+		('frl45763', '15486925P', '4896414587', 'Francisco', 'Roldan', 7, 2, 4, 'frold@gmail.com', '+34916853654');
+	
+	INSERT INTO fijo (codigo_empleado, antiguedad)
+	VALUES 
+		('ppm80832', '2012-07-24'),
+		('ars11234', '2013-11-04'),
+		('lcs52675', '2015-06-08'),
+		('frl45763', '2013-10-16');
+	
+	INSERT INTO titulacion (codigo_empleado, id_titulo)
+	VALUES 
+		('ppm80832', 1),
+		('ars11234', 2),
+		('lcs52675', 1),
+		('frl45763', 2);
+	
+	INSERT INTO tipoprestamo (codigo_prestamo, tipo_interes, vigencia)
+	VALUES
+		(11, 4.5, '2020-01-01'),
+		(12, 3.0, '2021-01-01'),
+		(13, 3.1, '2024-01-01'),
+		(14, 2.9, '2022-01-01'),
+		(15, 4.0, '2025-01-01'),
+		(16, 1.0, '2027-01-01');
+	
+	INSERT INTO fecha (fecha)
+	VALUES 
+		('2013-07-24'),
+		('2017-10-25'),
+		('2014-10-04'),
+		('2012-12-21'),
+		('2012-05-13'),
+		('2015-11-11'),
+		('2016-01-07'),
+		('2011-09-05'),
+		('2014-02-28'),
+		('2014-10-12'),
+		('2013-12-25'),
+		('2016-05-01'),
+		('2011-12-03');
+	
+	INSERT INTO peticion (codigo_empleado, id_codigo_prestamo, id_fecha, si_no)
+	VALUES
+		('ppm80832', 11, 21, FALSE),
+		('ars11234', 12, 22, FALSE),
+		('mrr99583', 13, 23, FALSE),
+		('mgg12375', 14, 24, FALSE),
+		('lcs52675', 15, 25, FALSE),
+		('frl45763', 16, 26, FALSE);
+	
+	INSERT INTO traslado (codigo_empleado, id_fecha, id_ciudad, id_agencia, fecha_fin)
+	VALUES
+		('ppm80832', 27, 2, 1, '2021-7-25'),
+		('ars11234', 28, 4, 4, '2017-11-23'),
+		('mrr99583', 29, 2, 5, '2015-1-29'),
+		('mgg12375', 30, 6, 7, '2016-9-8'),
+		('gtp56984', 31, 5, 8, '2015-10-16'),
+		('frl45763', 32, 2, 1, '2017-9-4'),
+		('lcs52675', 33, 2, 5, '2018-12-10');\end{sourcecodep}
+\newpage
+\section{Ejercicio 1 - Realizar las siguientes consultas y anotar la sentencia SQL y su salida en un documento}
+	\subsection{Haz un listado de todos los trabajadores que han sido trasladados a una agencia que no es su lugar de residencia. Añade el año en el que fueron trasladados.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			SELECT e.codigo_empleado, e.nombre, e.apellido, e.id_ciudad_res, a.id_ciudad, c.nombre_ciudad, a.nombre_agencia, YEAR(f.fecha) AS año FROM empleado AS e
+				INNER JOIN traslado AS t ON t.id_agencia = e.id_central
+				INNER JOIN ciudad AS c ON c.id = t.id_ciudad
+				INNER JOIN agencia AS a ON a.id_ciudad = t.id_ciudad
+				INNER JOIN fecha AS f ON f.id = t.id_fecha
+				WHERE e.id_ciudad_res != a.id_ciudad;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/01.png}{scale=0.5}{0.5}{}
+		\insertimageboxed[]{img/ejercicio1/01a.png}{scale=0.5}{0.5}{}
+	\subsection{Realiza un listado de los empleados que han solicitado un préstamo, y este no ha sido concedido. Añade al listado el código de préstamo.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			SELECT e.nombre, e.apellido, t.codigo_prestamo FROM empleado AS e
+				INNER JOIN peticion AS p ON p.codigo_empleado = e.codigo_empleado
+				INNER JOIN tipoprestamo AS t ON t.id = p.id_codigo_prestamo
+				WHERE p.si_no = 0;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/02.png}{scale=0.6}{0.5}{}
+	\subsection{Muestra el nombre de los empleados y la fecha en la que han sido trasladados, aquellos empleados que llevan menos de 5 años desde el último traslado. Muestra el resultado ordenado por el nombre y apellido del trabajador}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			SELECT e.nombre, e.apellido, f.fecha FROM empleado AS e
+				INNER JOIN traslado AS t ON t.codigo_empleado = e.codigo_empleado
+				INNER JOIN fecha AS f ON f.id = t.id_fecha
+				WHERE f.fecha > DATE_SUB(CURDATE(), INTERVAL 5 YEAR)
+				ORDER BY e.nombre, e.apellido;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/03.png}{scale=0.6}{0.5}{}
+\newpage
+	\subsection{Haz un listado de las agencias que en mediana trabajan los trabajadores más de una vez y media. En el listado se tiene que mostrar el código del trabajador, donde reside y la mediana de años que lleva el trabajador.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{9}{9}\selectfont\ttfamily},firstnumber=1}{}
+			SET sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''));
+			
+			CREATE OR REPLACE VIEW traslados_trabajadores AS
+				SELECT CONCAT(t.id_fecha, '_',t.codigo_empleado) AS id, a.nombre_agencia, a.id AS id_agencia, e.codigo_empleado, c.nombre_ciudad AS ciudad_de_residencia, TIMESTAMPDIFF(YEAR, f.fecha, t.fecha_fin) AS años 
+				FROM agencia AS a
+				INNER JOIN traslado AS t ON t.id_agencia = a.id
+				INNER JOIN empleado AS e ON e.codigo_empleado = t.codigo_empleado
+				INNER JOIN ciudad AS c ON c.id = e.id_ciudad_res
+				INNER JOIN fecha AS f ON f.id = t.id_fecha
+				GROUP BY id;
+			
+			CREATE OR REPLACE VIEW numero_traslados AS
+				SELECT t.id_agencia, COUNT(t.id_agencia) AS n FROM traslado AS t
+					GROUP BY t.id_agencia;
+			
+			CREATE OR REPLACE VIEW media_años_trabajados AS
+				SELECT tt.codigo_empleado, AVG(tt.años) AS media_de_años FROM traslados_trabajadores AS tt
+					GROUP BY tt.codigo_empleado
+					ORDER BY tt.codigo_empleado;
+			
+			SELECT tt.nombre_agencia, tt.id_agencia, tt.codigo_empleado, tt.ciudad_de_residencia, mt.media_de_años FROM traslados_trabajadores AS tt
+				INNER JOIN numero_traslados AS nt
+				INNER JOIN media_años_trabajados AS mt ON mt.codigo_empleado = tt.codigo_empleado
+				WHERE nt.id_agencia = tt.id_agencia
+				GROUP BY tt.id
+				HAVING AVG(nt.n) > 1.5
+				ORDER BY tt.nombre_agencia;
+			
+			DROP VIEW IF EXISTS traslados_trabajadores;
+			DROP VIEW IF EXISTS numero_traslados;
+			DROP VIEW IF EXISTS media_años_trabajados;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/04.png}{scale=0.6}{0.5}{}
+	\subsection{Muestra un listado de los empleados con titulación que estén afiliados al sindicato.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			SELECT e.codigo_empleado, e.nombre, e.apellido, s.nombre_sindicato, ti.nombre_titulo FROM empleado AS e
+				INNER JOIN titulacion AS t ON t.codigo_empleado = e.codigo_empleado
+				INNER JOIN sindicato AS s ON s.id = e.id_central
+				INNER JOIN titulo AS ti ON ti.id = t.id_titulo
+				WHERE t.id_titulo IS NOT NULL
+				AND e.id_central IS NOT NULL;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/05.png}{scale=0.5}{0.5}{}
+	\subsection{Inventa una consulta que contenga un group by + having + agregación (count).}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/*Hacer un listado de empleados con peticiones de prestamos con más de 1 petición*/
+			SELECT e.codigo_empleado, e.nombre, e.apellido, COUNT(p.codigo_empleado) AS numero_peticiones FROM empleado AS e
+				INNER JOIN peticion AS p ON e.codigo_empleado = p.codigo_empleado
+				GROUP BY codigo_empleado
+				HAVING numero_peticiones > 1;\end{sourcecodep}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/*Filtra el número de peticiones que ha hecho cada empleado, mostrando dicho número y su dni*/
+			SELECT empleado.dni, COUNT(peticion.id_codigo_prestamo) AS PeticionesPorEmpleado
+				FROM peticion
+				INNER JOIN empleado ON peticion.codigo_empleado = empleado.codigo_empleado
+				GROUP BY empleado.dni
+				HAVING COUNT(peticion.id_codigo_prestamo) > 0;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/06.png}{scale=0.5}{0.5}{}
+	\subsection{Inventa una consulta que contenga una combinación externa + ordenación (order by).}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/*Mostrar listado de empleados y su antigüedad como fijos ordenados por antiguedad ascendentemente. */
+			SELECT e.codigo_empleado, e.nombre, e.apellido, f.antiguedad FROM empleado AS e
+				RIGHT OUTER JOIN fijo AS f ON f.codigo_empleado = e.codigo_empleado 
+				ORDER BY f.antiguedad ASC;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/07.png}{scale=0.5}{0.5}{}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Empleados temporales ordenados por fecha de inicio */
+			SELECT e.codigo_empleado, e.nombre, e.apellido, t.fecha_inicio_cont FROM empleado AS e
+				RIGHT OUTER JOIN temporal AS t ON t.codigo_empleado = e.codigo_empleado
+				ORDER BY t.fecha_inicio_cont ASC;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio1/08.png}{scale=0.5}{0.5}{}
+\section{Ejercicio 2 - Realizar las siguientes modificaciones en los datos insertados y anotar la sentencia SQL y su salida en un documento}
+	\subsection{Habilitar/Deshabilitar Safe Mode Updates}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Deshabilitamos safe mode update */
+			SET SQL_SAFE_UPDATES = 0;\end{sourcecodep}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Habilitamos safe mode update */
+			SET SQL_SAFE_UPDATES = 1;\end{sourcecodep}
+	\subsection{Incrementa en 1 el número de veces que un trabajador ha sido trasladado, para todos aquellos trabajadores que llevan más de 5 años en la agencia bancaria.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			INSERT INTO fecha (fecha) VALUES (NOW());
+			
+			INSERT INTO traslado (codigo_empleado, id_fecha , id_ciudad, id_agencia, fecha_fin)
+			SELECT t.codigo_empleado, (SELECT f.id FROM fecha AS f ORDER BY f.id DESC LIMIT 1) AS id_fecha,  t.id_ciudad, t.id_agencia, DATE_ADD((SELECT f.fecha FROM fecha AS f ORDER BY f.id DESC LIMIT 1), INTERVAL 5 YEAR) as fecha_fin
+				FROM traslado AS t
+				INNER JOIN fecha AS f ON f.id = t.id_fecha
+				WHERE YEAR(f.fecha) <= YEAR(SYSDATE()) - 5
+					AND t.id_ciudad IS NOT NULL
+					AND id_agencia  IS NOT NULL;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio2/01.png}{scale=0.4}{0.5}{}
+		\insertimageboxed[]{img/ejercicio2/01a.png}{scale=0.4}{0.5}{}
+	\subsection{Elimina los trabajadores que nunca han sido trasladados fuera de su ciudad de residencia.}
+		\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			CREATE OR REPLACE VIEW traslados_fuera AS
+				SELECT e.codigo_empleado AS codigo_empleado FROM empleado AS e
+					INNER JOIN traslado AS t ON t.codigo_empleado = e.codigo_empleado
+					WHERE e.id_ciudad_res != t.id_ciudad;
+			
+			CREATE OR REPLACE VIEW traslados_dentro AS
+				SELECT e.codigo_empleado AS codigo_empleado FROM empleado AS e
+					INNER JOIN traslado AS t ON t.codigo_empleado = e.codigo_empleado
+					WHERE e.id_ciudad_res = t.id_ciudad;
+			
+			CREATE OR REPLACE VIEW traslados_null AS
+				SELECT e.codigo_empleado AS codigo_empleado FROM empleado AS e
+					INNER JOIN traslado AS t ON t.codigo_empleado = e.codigo_empleado
+					WHERE e.id_ciudad_res IS NULL OR t.id_ciudad IS NULL;
+			
+			DELETE FROM empleado WHERE codigo_empleado IN (
+				SELECT codigo_empleado FROM (
+					SELECT e.codigo_empleado AS codigo_empleado FROM empleado AS e
+						WHERE e.codigo_empleado NOT IN (SELECT codigo_empleado FROM traslado) OR
+							e.codigo_empleado IN (SELECT codigo_empleado FROM traslados_null) OR
+							(e.codigo_empleado NOT IN (SELECT codigo_empleado FROM traslados_fuera) AND
+							e.codigo_empleado IN (SELECT codigo_empleado FROM traslados_dentro))
+					) AS codigo_empleado
+				);
+			
+			DROP VIEW IF EXISTS traslados_fuera;
+			DROP VIEW IF EXISTS traslados_dentro;
+			DROP VIEW IF EXISTS traslados_null;\end{sourcecodep}
+		\insertimageboxed[]{img/ejercicio2/02.png}{scale=0.5}{0.5}{}

@@ -1,2 +1,14 @@
 \babel@toc {spanish}{}
-\contentsline {section}{\numberline {1}}{1}{section.1}
+\contentsline {section}{\numberline {1}Registros}{1}{section.1}
+\contentsline {section}{\numberline {2}Ejercicio 1 - Realizar las siguientes consultas y anotar la sentencia SQL y su salida en un documento}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Haz un listado de todos los trabajadores que han sido trasladados a una agencia que no es su lugar de residencia. A\IeC {\~n}ade el a\IeC {\~n}o en el que fueron trasladados.}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Realiza un listado de los empleados que han solicitado un pr\IeC {\'e}stamo, y este no ha sido concedido. A\IeC {\~n}ade al listado el c\IeC {\'o}digo de pr\IeC {\'e}stamo.}{4}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Muestra el nombre de los empleados y la fecha en la que han sido trasladados, aquellos empleados que llevan menos de 5 a\IeC {\~n}os desde el \IeC {\'u}ltimo traslado. Muestra el resultado ordenado por el nombre y apellido del trabajador}{4}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Haz un listado de las agencias que en mediana trabajan los trabajadores m\IeC {\'a}s de una vez y media. En el listado se tiene que mostrar el c\IeC {\'o}digo del trabajador, donde reside y la mediana de a\IeC {\~n}os que lleva el trabajador.}{5}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Muestra un listado de los empleados con titulaci\IeC {\'o}n que est\IeC {\'e}n afiliados al sindicato.}{6}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Inventa una consulta que contenga un group by + having + agregaci\IeC {\'o}n (count).}{6}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.7}Inventa una consulta que contenga una combinaci\IeC {\'o}n externa + ordenaci\IeC {\'o}n (order by).}{7}{subsection.2.7}
+\contentsline {section}{\numberline {3}Ejercicio 2 - Realizar las siguientes modificaciones en los datos insertados y anotar la sentencia SQL y su salida en un documento}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Habilitar/Deshabilitar Safe Mode Updates}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Incrementa en 1 el n\IeC {\'u}mero de veces que un trabajador ha sido trasladado, para todos aquellos trabajadores que llevan m\IeC {\'a}s de 5 a\IeC {\~n}os en la agencia bancaria. }{8}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Elimina los trabajadores que nunca han sido trasladados fuera de su ciudad de residencia.}{9}{subsection.3.3}
