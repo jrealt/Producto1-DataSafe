@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.28)  2 MAY 2019 21:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.28)  2 MAY 2019 21:40
 entering extended mode
 **./informe.tex
 (informe.tex
@@ -2083,31 +2083,31 @@ LaTeX Info: Redefining \% on input line 59.
 <img/09.png, id=99, 297.36093pt x 53.44969pt>
 File: img/09.png Graphic file (type png)
 <use img/09.png>
-Package pdftex.def Info: img/09.png  used on input line 74.
-(pdftex.def)             Requested size: 297.3602pt x 53.44954pt.
-LaTeX Info: Redefining \. on input line 81.
-LaTeX Info: Redefining \% on input line 81.
+Package pdftex.def Info: img/09.png  used on input line 75.
+(pdftex.def)             Requested size: 237.88905pt x 42.75978pt.
+LaTeX Info: Redefining \. on input line 82.
+LaTeX Info: Redefining \% on input line 82.
  [5 <./img/09.png>]
-<img/10.png, id=114, 651.18282pt x 40.65187pt>
+<img/10.png, id=115, 651.18282pt x 40.65187pt>
 File: img/10.png Graphic file (type png)
 <use img/10.png>
-Package pdftex.def Info: img/10.png  used on input line 109.
+Package pdftex.def Info: img/10.png  used on input line 110.
 (pdftex.def)             Requested size: 520.94696pt x 32.52153pt.
 
-Overfull \hbox (52.19157pt too wide) in paragraph at lines 109--109
+Overfull \hbox (52.19157pt too wide) in paragraph at lines 110--110
  [][] 
  []
 
-LaTeX Info: Redefining \. on input line 114.
-LaTeX Info: Redefining \% on input line 114.
+LaTeX Info: Redefining \. on input line 115.
+LaTeX Info: Redefining \% on input line 115.
 [6 <./img/10.png>]
-LaTeX Info: Redefining \. on input line 120.
-LaTeX Info: Redefining \% on input line 120.
+LaTeX Info: Redefining \. on input line 121.
+LaTeX Info: Redefining \% on input line 121.
  [7]
-<img/11.png, id=133, 509.65407pt x 197.23688pt>
+<img/11.png, id=134, 509.65407pt x 197.23688pt>
 File: img/11.png Graphic file (type png)
 <use img/11.png>
-Package pdftex.def Info: img/11.png  used on input line 122.
+Package pdftex.def Info: img/11.png  used on input line 123.
 (pdftex.def)             Requested size: 458.68442pt x 177.51152pt.
 )
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 291.
@@ -2123,9 +2123,9 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 291.
 Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 291.
  ) 
 Here is how much of TeX's memory you used:
- 35547 strings out of 493305
- 588731 string characters out of 3138871
- 994657 words of memory out of 3000000
+ 35548 strings out of 493305
+ 588745 string characters out of 3138871
+ 996657 words of memory out of 3000000
  38492 multiletter control sequences out of 15000+200000
  647591 words of font info for 116 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -2141,9 +2141,9 @@ blic/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb>
 iKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/public/lm/lmri10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy
 10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmvtt10.pfb>
-Output written on informe.pdf (10 pages, 406943 bytes).
+Output written on informe.pdf (10 pages, 407101 bytes).
 PDF statistics:
- 207 PDF objects out of 1000 (max. 8388607)
- 61 named destinations out of 1000 (max. 500000)
+ 208 PDF objects out of 1000 (max. 8388607)
+ 62 named destinations out of 1000 (max. 500000)
  97 words of extra memory for PDF output out of 10000 (max. 10000000)
 

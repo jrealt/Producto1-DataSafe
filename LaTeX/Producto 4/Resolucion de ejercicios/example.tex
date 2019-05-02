@@ -2,15 +2,15 @@
 	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
 		CREATE USER 'admin'@'localhost' IDENTIFIED BY '1234';
 		GRANT ALL PRIVILEGES ON icxp3_7.* TO 'admin'@'localhost' WITH GRANT OPTION;
-		GRANT 
-		CREATE USER, 
-		RELOAD, 
-		SELECT, 
-		CREATE ROUTINE, 
-		ALTER ROUTINE, 
-		SUPER 
-		ON *.* TO 'admin'@'localhost' 
-		WITH GRANT OPTION;
+		GRANT
+			CREATE USER,
+			RELOAD,
+			SELECT,
+			CREATE ROUTINE,
+			ALTER ROUTINE,
+			SUPER
+			ON *.* TO 'admin'@'localhost'
+			WITH GRANT OPTION;
 		FLUSH PRIVILEGES;\end{sourcecodep}
 	\newp En el primer GRANT, el asterisco después del schema designado donde se otorgan los privilegios, en nuestro caso icxp3\_7, se utiliza para definir que el usuario “admin” se crea con total control sobre el schema icxp3\_7 (y no otros).
 	
@@ -66,12 +66,13 @@
 	Para esto ejecutamos las sentencias:
 	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
 		GRANT UPDATE ON icxp3_7.empleado TO  'empleado'@'localhost';
-		GRANT SELECT ON icxp3_7.* TO  'empleado'@'localhost';\end{sourcecodep}
+		GRANT SELECT ON icxp3_7.* TO  'empleado'@'localhost';
+		FLUSH PRIVILEGES;\end{sourcecodep}
 	\newp Podemos verificar que el usuario “empleado” tiene los privilegios con la siguiente sentencia:
 	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
 		SHOW GRANTS FOR 'empleado'@'localhost';\end{sourcecodep}
 	\newp Muestra de la salida:
-	\insertimageboxed[]{img/09}{scale=1}{0.5}{}
+	\insertimageboxed[]{img/09}{scale=0.8}{0.5}{}
 	
 	Justificación:
 	
