@@ -1,0 +1,5 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Crear el usuario administrador llamado admin, que tendr\IeC {\'a} todos los privilegios sobre la base de datos de nuestro proyecto.}{1}{section.1}
+\contentsline {section}{\numberline {2}El usuario administrador crea 2 usuarios m\IeC {\'a}s, uno llamado \IeC {\textquoteleft }empleado\IeC {\textquoteright }\IeC {\textquoteright } y el otro llamado \IeC {\textquoteleft }agencia\IeC {\textquoteright }.}{4}{section.2}
+\contentsline {section}{\numberline {3}A partir de los dos usuarios nuevos creados por el administrador, pensar y dar los privilegios que creas oportunos sobre las tablas y atributos de la base de datos. Justificar la respuesta.}{5}{section.3}
+\contentsline {section}{\numberline {4}Realizar una tabla ACL (Access Control Lists) con control de acceso discrecional (DAC), d\IeC {\'o}nde pueda verse la distribuci\IeC {\'o}n de privilegios para cada usuario.}{8}{section.4}

@@ -1,0 +1,122 @@
+\section{Crear el usuario administrador llamado admin, que tendrá todos los privilegios sobre la base de datos de nuestro proyecto.}
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		CREATE USER 'admin'@'localhost' IDENTIFIED BY '1234';
+		GRANT ALL PRIVILEGES ON icxp3_7.* TO 'admin'@'localhost' WITH GRANT OPTION;
+		GRANT 
+		CREATE USER, 
+		RELOAD, 
+		SELECT, 
+		CREATE ROUTINE, 
+		ALTER ROUTINE, 
+		SUPER 
+		ON *.* TO 'admin'@'localhost' 
+		WITH GRANT OPTION;
+		FLUSH PRIVILEGES;\end{sourcecodep}
+	\newp En el primer GRANT, el asterisco después del schema designado donde se otorgan los privilegios, en nuestro caso icxp3\_7, se utiliza para definir que el usuario “admin” se crea con total control sobre el schema icxp3\_7 (y no otros).
+	
+	\newp En el segundo GRANT, hacemos que el usuario “admin” pueda crear usuarios de mysql, pueda recargar los permisos(RELOAD), pueda visualizar datos(SELECT) y pueda crear funciones(CREATE ROUTINE, ALTER ROUTINE y SUPER) en toda la instancia de MySQL.
+	
+	\newp En MySQL Workbench si vamos al menú “Server > Users and Privileges” podemos ver que el usuario “admin” ha sido creado y verificar que tiene todos los privilegios.
+	
+	\insertimageboxed[]{img/01}{scale=0.5}{0.5}{}
+	\insertimageboxed[]{img/02}{scale=0.5}{0.5}{}
+	
+	Otra manera de verificar que se ha creado el usuario “admin” con todos los privilegios es usando las siguientes sentencias:
+	
+	\newp Para ver que se ha creado el usuario “admin”:
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		SELECT user,host FROM mysql.user WHERE user LIKE 'admin';\end{sourcecodep}
+	
+	\newp Muestra de la salida:
+	\insertimageboxed[]{img/03}{scale=1}{0.5}{}
+	
+	\newp Para ver sus privilegios:
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		SHOW GRANTS FOR 'admin'@'localhost';\end{sourcecodep}
+	
+	\newp Muestra de la salida:
+	\insertimageboxed[]{img/04}{scale=0.8}{0.5}{}
+\newpage
+	\newp Otra de las formas de verificarlo sería desde la ventana “Navigator” en MySQL Workbench, debemos hacer clic derecho sobre nuestro schema y seleccionar “Schema inspector”.
+	\insertimageboxed[]{img/05}{scale=1}{0.5}{}
+	
+	\newp En el podemos ver información relevante del schema, en la pestaña “Grants” podremos ver los privilegios otorgados al usuario “admin”.
+	\insertimageboxed[]{img/06}{scale=0.55}{0.5}{}
+	
+\newpage
+\section{El usuario administrador crea 2 usuarios más, uno llamado ‘empleado’’ y el otro llamado ‘agencia’.}
+	\insertimageboxed[]{img/07}{scale=0.7}{0.5}{}
+	Nos conectamos a la base de datos con las credenciales del nuevo usuario “admin” y ejecutamos las siguientes sentencias para crear los usuarios “empleado” y ”agencia”:
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		CREATE USER 'empleado'@'localhost' IDENTIFIED BY '1234';
+		CREATE USER 'agencia'@'localhost' IDENTIFIED BY '1234';\end{sourcecodep}
+	\newp Podemos verificar que los usuarios se han creado ejecutando la siguiente sentencia:
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		SELECT user,host FROM mysql.user WHERE user LIKE 'empleado' OR user LIKE 'agencia';\end{sourcecodep}
+	
+	\newp Muestra de la salida:
+	\insertimageboxed[]{img/08}{scale=1}{0.5}{}
+\newpage
+\section{A partir de los dos usuarios nuevos creados por el administrador, pensar y dar los privilegios que creas oportunos sobre las tablas y atributos de la base de datos. Justificar la respuesta.}
+	\subsubsection*{Empleado:}
+		\begin{itemize}
+			\item Actualizar registros en tabla empleado (UPDATE)
+			\item Lectura de registros de cualquier tabla (SELECT)
+		\end{itemize}
+	Para esto ejecutamos las sentencias:
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		GRANT UPDATE ON icxp3_7.empleado TO  'empleado'@'localhost';
+		GRANT SELECT ON icxp3_7.* TO  'empleado'@'localhost';\end{sourcecodep}
+	\newp Podemos verificar que el usuario “empleado” tiene los privilegios con la siguiente sentencia:
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		SHOW GRANTS FOR 'empleado'@'localhost';\end{sourcecodep}
+	\newp Muestra de la salida:
+	\insertimageboxed[]{img/09}{scale=1}{0.5}{}
+	
+	Justificación:
+	
+	\newp En el primer caso, "empleado" podrá ser utilizado por una aplicación, la creación de este usuario se hace para limitar con unos permisos y privilegios concretos las acciones que realizará el usuario de MySQL a partir de las instrucciones que reciba del código de una aplicación. Ya que en MySQL no se puede limitar la consulta o modificación de una sola fila de una tabla, no podemos hacer que un usuario MySQL solo pueda operar con una única fila de una tabla (es decir, no podemos hacer que un único empleado solo pueda ver sus datos desde MySQL, este filtro debe hacerse desde la aplicación).
+	
+	\newp Creemos que los empleados deben poder actualizar datos relacionados con sus perfiles, como su correo electrónico o su teléfono móvil, para modificarlos en caso de que estos hayan cambiado. También deben de tener permisos de lectura sobre todas las tablas, con tal así de poder desarrollar su operativa laboral de forma eficiente y sin contratiempos, por ejemplo, los trabajadores del departamento de recursos humanos pueden consultar las fechas de contratación de los empleados con las tablas ‘fijo’ y ‘temporal’, los trabajadores del departamento financiero pueden consultar los préstamos solicitados por los empleados desde ‘peticion’ y ‘tipoprestamo’, etc… Aunque en el back-end el usuario ‘empleado’ interactúa con la base de datos, la aplicación realizará un filtrado a la información que el usuario puede recibir de la base de datos, por ejemplo, los empleados no podrán hacer consultas de tablas que no correspondan a su departamento, los empleados (sin contar excepciones, como el departamento de recursos humanos) sólo podrán consultar información sensible de su propio perfil (en este caso, la aplicación filtra el SELECT del usuario de la base de datos, mostrando solo el registro que coincida con su código de empleado).
+	
+	\newp Ejemplo:
+	
+	\newp Todos los empleados de la empresa tendrán una cuenta personal en la aplicación, donde inician sesión con unas credenciales, por ejemplo, dichas credenciales pueden ser su código de empleado y una contraseña que habrán escogido ellos mismos. En el lado del back-end, aunque cada empleado tenga su propia cuenta, todas las cuentas de empleados interactúan con la base de datos utilizando el usuario ‘empleado’ de MySQL. Finalmente, el filtrado que corresponde según la normativa de protección de datos se realiza desde el lado de la aplicación, que será esta la que debe de limitar que muestre únicamente los datos sensibles que pertenecen al empleado con la sesión iniciada.
+	
+	\subsubsection*{Agencia:}
+		\begin{itemize}
+			\item Crear tablas (CREATE)
+			\item Alterar tablas (ALTER)
+			\item Eliminación de tablas (DROP)
+			\item Eliminar registros de cualquier tabla (DELETE)
+			\item Insertar registros en cualquier tabla (INSERT)
+			\item Actualizar registros en cualquier tabla (UPDATE)
+			\item Lectura de registros de cualquier tabla (SELECT)
+			\item Crear vistas (CREATE VIEW)
+			\item Ver las vistas (SHOW VIEW)
+			\item Crear tablas temporales (CREATE TEMPORARY TABLES)
+		\end{itemize}
+	
+	Para esto ejecutamos la sentencia:
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		GRANT CREATE, ALTER, DROP, DELETE, INSERT, UPDATE, SELECT, CREATE VIEW, SHOW VIEW, CREATE TEMPORARY TABLES
+			ON icxp3_7.* TO 'agencia'@'localhost';\end{sourcecodep}
+	Podemos verificar que el usuario “agencia” tiene los privilegios con la siguiente sentencia:
+	
+	\begin{sourcecodep}[]{sql}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+		SHOW GRANTS FOR 'agencia'@'localhost';\end{sourcecodep}
+	\newp Muestra de la salida:
+	\insertimageboxed[]{img/10}{scale=0.8}{0.5}{}
+	
+	Justificación:
+	
+	\newp En el segundo caso, el usuario “agencia” podrá ser utilizado por una aplicación, la creación de este usuario se hace para limitar con unos permisos y privilegios concretos las acciones que realizará el usuario de MySQL a partir de las instrucciones que reciba del código de una aplicación. 
+	
+	\newp Creemos que las agencias deben poder tener control estructural y poder manipular los datos en el schema, por eso le hemos proporcionado los privilegios necesarios para ello. 
+	
+	\newp Ejemplo:
+	\newp Las agencias tendrán una cuenta de agencia en la aplicación, donde inician sesión con unas credenciales, por ejemplo, dichas credenciales pueden ser su nombre de agencia y una contraseña elegida por el gerente de la agencia. En el lado del back-end, aunque cada agencia tenga su propia cuenta, todas las cuentas de agencias interactúan con la base de datos utilizando el usuario ‘agencia’ de MySQL. Finalmente, el filtrado que corresponde según la normativa de protección de datos se realiza desde el lado de la aplicación.
+	
+\newpage
+\section{Realizar una tabla ACL (Access Control Lists) con control de acceso discrecional (DAC), dónde pueda verse la distribución de privilegios para cada usuario.}
+	\insertimageboxed[]{img/11}{scale=0.9}{0.5}{}
