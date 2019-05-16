@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS titulacion (
     id_titulo INT NOT NULL,
     PRIMARY KEY (codigo_empleado),
     FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (id_titulo) REFERENCES titulo (id) ON UPDATE CASCADE ON DELETE RESTRICT);
+    FOREIGN KEY (id_titulo) REFERENCES titulo (id) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE IF NOT EXISTS traslado (
     codigo_empleado VARCHAR(8) NOT NULL,
