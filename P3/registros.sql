@@ -9,9 +9,12 @@ INSERT INTO empleado (codigo_empleado, dni, nss, nombre, apellido, id_nombre_cat
 INSERT INTO fijo (codigo_empleado, antiguedad)
   VALUES 
   ('ppm80832', '2012-07-24'),
-  ('ars11234', '2013-11-04'),
-  ('lcs52675', '2015-06-08'),
-  ('frl45763', '2013-10-16');
+  ('ars11234', '2013-11-04');
+
+INSERT INTO temporal (codigo_empleado, fecha_inicio_cont, fecha_fin_cont)
+  VALUES 
+  ('lcs52675', '2015-06-08', '2015-08-08'),
+  ('frl45763', '2013-10-16', '2013-12-16');
 
 INSERT INTO titulacion (codigo_empleado, id_titulo)
   VALUES 
