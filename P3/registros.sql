@@ -52,10 +52,10 @@ INSERT INTO peticion (codigo_empleado, id_codigo_prestamo, id_fecha, si_no)
     VALUES
     ('ppm80832', 11, 21, FALSE),
     ('ars11234', 12, 22, FALSE),
-    ('mrr99583', 13, 23, FALSE),
-    ('mgg12375', 14, 24, FALSE),
-    ('lcs52675', 15, 25, FALSE),
-    ('frl45763', 16, 26, FALSE);
+    ('ars11234', 13, 23, FALSE),
+    ('ppm80832', 14, 24, FALSE),
+    ('ppm80832', 15, 25, FALSE),
+    ('ars11234', 16, 26, FALSE);
 
 INSERT INTO traslado (codigo_empleado, id_fecha, id_ciudad, id_agencia, fecha_fin)
     VALUES
