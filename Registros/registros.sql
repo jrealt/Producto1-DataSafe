@@ -157,16 +157,15 @@ INSERT INTO tipoprestamo (codigo_prestamo, tipo_interes, vigencia)
   (9, 3.5, '2019-12-21'),
   (10, 6.7, '2020-01-01');
 
-
 INSERT INTO peticion (codigo_empleado, id_codigo_prestamo, id_fecha, si_no)
   VALUES
   ('jrm89012', 1, 1, TRUE),
   ('mgs91128', 2, 2, TRUE),
-  ('crl38160', 3, 3, TRUE),
-  ('jrm89012', 4, 4, TRUE),
+  ('jgr23778', 3, 3, TRUE),
+  ('jgr23778', 4, 4, TRUE),
   ('jrm89012', 5, 5, TRUE),
-  ('lap33670', 6, 6, TRUE),
-  ('mrr99583', 7, 7, TRUE),
+  ('mgg12375', 6, 6, TRUE),
+  ('mgg12375', 7, 7, TRUE),
   ('mgg12375', 8, 8, TRUE),
-  ('mrr99583', 9, 9, TRUE),
-  ('crl38160', 10, 10, TRUE);
+  ('rms10184', 9, 9, TRUE),
+  ('rms10184', 10, 10, TRUE);
