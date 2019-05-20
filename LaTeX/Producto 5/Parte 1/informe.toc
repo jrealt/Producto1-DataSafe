@@ -1,0 +1,10 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Realizar los siguientes procedimientos almacenados y Funciones.}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Un procedimiento almacenado que retorne el n\IeC {\'u}mero de trabajadores fijos que hay en la entidad bancaria.}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Una funci\IeC {\'o}n que devuelva el doble del tipo de inter\IeC {\'e}s de los pr\IeC {\'e}stamos.}{1}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Inventar una funci\IeC {\'o}n relacionada con la seguridad en el banco.}{1}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Inventar un procedimiento almacenado que tenga un par\IeC {\'a}metro de entrada.}{2}{subsection.1.4}
+\contentsline {section}{\numberline {2}Realizar los siguientes disparadores.}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Un disparador que al a\IeC {\~n}adir un nuevo empleado verifique que su apellido no puede tener una longitud superior a 15 caracteres.}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Un disparador que al a\IeC {\~n}adir una cuota sindical, verifique que la cuota(n\IeC {\'u}mero) es positivo.}{3}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Un disparador que al eliminar una titulaci\IeC {\'o}n, copie esta titulaci\IeC {\'o}n en otra tabla (esta tabla deber\IeC {\'a} ser creada por vosotros).}{4}{subsection.2.3}

@@ -1,0 +1,67 @@
+\section{Realizar los siguientes procedimientos almacenados y Funciones.}
+	\subsection{Un procedimiento almacenado que retorne el número de trabajadores fijos que hay en la entidad bancaria.}
+		\begin{sourcecodep}[]{c}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			DELIMITER //
+			CREATE PROCEDURE empleadosFijos (OUT empleados INT)
+			BEGIN
+				SELECT COUNT(*) INTO empleados FROM fijo;
+			END
+			//\end{sourcecodep}
+		\begin{sourcecodep}[]{c}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			CALL empleadosFijos (@numero_empleados_fijos);
+			SELECT @numero_empleados_fijos;\end{sourcecodep}
+		\insertimageboxed[]{img/01}{scale=1}{0.5}{}
+	\subsection{Una función que devuelva el doble del tipo de interés de los préstamos.}
+		\begin{sourcecodep}[]{c}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			DELIMITER //
+			CREATE FUNCTION dobleInteres (id INT) RETURNS DOUBLE DETERMINISTIC
+			BEGIN 
+				SET @var = 0;
+				SELECT tipo_interes*2 INTO @var FROM tipoprestamo WHERE tipoprestamo.id = id;
+				RETURN @var;
+			END
+			//\end{sourcecodep}
+		\begin{sourcecodep}[]{c}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			SELECT dobleInteres(1);\end{sourcecodep}
+		\insertimageboxed[]{img/02}{scale=1}{0.5}{}
+	\subsection{Inventar una función relacionada con la seguridad en el banco.}
+		\begin{sourcecodep}[]{c}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			/* Valida un empleado según su código de empleado, dni y nss */
+			DELIMITER //
+			CREATE FUNCTION validaEmpleado (codigo_empleado VARCHAR(8), dni VARCHAR(10), nss VARCHAR(20) ) RETURNS TINYINT(1) DETERMINISTIC
+			BEGIN
+				declare validado TINYINT(1);
+				IF (SELECT COUNT(e.codigo_empleado) FROM empleado AS e WHERE e.codigo_empleado LIKE codigo_empleado AND e.dni LIKE dni AND e.nss LIKE nss ) THEN
+					SET validado = 1;
+				ELSE
+					SET validado = 0;
+				END IF;
+				RETURN validado;
+			END
+			//\end{sourcecodep}
+		\begin{sourcecodep}[]{c}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			SELECT validaEmpleado('ars11234', '36584125P', '7279568404') AS valido;\end{sourcecodep}
+		\insertimageboxed[]{img/03}{scale=1}{0.5}{}
+	\subsection{Inventar un procedimiento almacenado que tenga un parámetro de entrada.}
+		\begin{sourcecodep}[]{c}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			DELIMITER //
+			CREATE PROCEDURE insertaOActualizaTitulo(IN nombre_titulo VARCHAR(20), IN numero DECIMAL(10,0))
+			BEGIN
+				IF (SELECT COUNT(t.nombre_titulo) FROM titulo AS t WHERE t.nombre_titulo LIKE nombre_titulo) THEN
+					UPDATE titulo AS tt
+						SET tt.numero = numero 
+						WHERE tt.nombre_titulo LIKE nombre_titulo;
+				ELSEIF (SELECT COUNT(t.nombre_titulo) FROM titulo AS t WHERE t.numero LIKE numero) THEN
+					UPDATE titulo AS tt
+						SET tt.nombre_titulo = nombre_titulo 
+						WHERE tt.numero = numero;
+				ELSE
+					INSERT INTO titulo (nombre_titulo, numero) 
+						VALUES (nombre_titulo, numero);
+				END IF;
+			END
+			//\end{sourcecodep}
+		\begin{sourcecodep}[]{c}{basicstyle={\fontsize{10}{10}\selectfont\ttfamily},firstnumber=1}{}
+			CALL insertaOActualizaTitulo('PGTH', '14000');
+			SELECT * FROM icxp3_7.titulo;\end{sourcecodep}
+		\insertimageboxed[]{img/04}{scale=1}{0.5}{}

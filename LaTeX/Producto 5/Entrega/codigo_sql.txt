@@ -1,0 +1,124 @@
+/* Realizar los siguientes procedimientos almacenados y Funciones. */
+/* a. Un procedimiento almacenado que retorne el número de trabajadores
+fijos que hay en la entidad bancaria. */
+DELIMITER //
+CREATE PROCEDURE empleadosFijos (OUT empleados INT)
+BEGIN
+    SELECT COUNT(*) INTO empleados FROM fijo;
+END
+//
+
+CALL empleadosFijos (@numero_empleados_fijos);
+SELECT @numero_empleados_fijos;
+
+/* b. Una función que devuelva el doble del tipo de interés de los préstamos. */
+DELIMITER //
+CREATE FUNCTION dobleInteres (id INT) 
+RETURNS double
+DETERMINISTIC
+BEGIN 
+  SET @var = 0;
+  SELECT tipo_interes*2 INTO @var FROM tipoprestamo WHERE tipoprestamo.id = id;
+  RETURN @var;
+END
+//
+
+SELECT dobleInteres(1);
+
+/* c. Inventar una función relacionada con la seguridad en el banco. */
+/* Valida un empleado según su código de empleado, dni y nss */
+DELIMITER //
+CREATE FUNCTION valida_empleado (codigo_empleado VARCHAR(8), dni VARCHAR(10), nss VARCHAR(20) ) RETURNS TINYINT(1) DETERMINISTIC
+BEGIN
+    declare validado TINYINT(1);
+    IF (SELECT COUNT(e.codigo_empleado) FROM empleado AS e WHERE e.codigo_empleado LIKE codigo_empleado AND e.dni LIKE dni AND e.nss LIKE nss ) THEN
+        SET validado = 1;
+    ELSE
+        SET validado = 0;
+    END IF;
+    RETURN validado;
+END
+//
+
+SELECT valida_empleado('ars11234', '36584125P', '7279568404') AS valido;
+
+/* d. Inventar un procedimiento almacenado que tenga un parámetro de
+entrada. */
+/* Procedimiento que inserta o actualiza un titulo */
+DELIMITER //
+CREATE PROCEDURE insertaOActualizaTitulo(IN nombre_titulo VARCHAR(20), IN numero DECIMAL(10,0))
+BEGIN
+    IF (SELECT COUNT(t.nombre_titulo) FROM titulo AS t WHERE t.nombre_titulo LIKE nombre_titulo) THEN
+        UPDATE titulo AS tt
+            SET tt.numero = numero 
+            WHERE tt.nombre_titulo LIKE nombre_titulo;
+    ELSEIF (SELECT COUNT(t.nombre_titulo) FROM titulo AS t WHERE t.numero LIKE numero) THEN
+        UPDATE titulo AS tt
+            SET tt.nombre_titulo = nombre_titulo 
+            WHERE tt.numero = numero;
+    ELSE
+        INSERT INTO titulo (nombre_titulo, numero) 
+            VALUES (nombre_titulo, numero);
+    END IF;
+END
+//
+
+CALL insertaOActualizaTitulo('PGTH', '14000');
+SELECT * FROM icxp3_7.titulo;
+
+/* Realizar los siguientes disparadores. */
+/* a. Un disparador que al añadir un nuevo empleado verifique que su
+apellido no puede tener una longitud superior a 15 caracteres. */
+DELIMITER //
+CREATE TRIGGER verificar_apellido BEFORE INSERT ON empleado FOR EACH ROW
+BEGIN
+    declare longitud INT(10);
+    declare mensaje_de_error VARCHAR(80);
+    SET longitud = CHAR_LENGTH(NEW.apellido);
+    IF (longitud > 15) THEN
+        SET  mensaje_de_error = CONCAT('Verificar_Apellido: Error, apellido sobrepasa 15 carácteres. Longitud: ', CAST(longitud AS CHAR));
+        SIGNAL sqlstate '45000' SET message_text = mensaje_de_error;
+    END IF;
+END
+//
+INSERT INTO empleado (codigo_empleado, dni, nss, nombre, apellido, id_nombre_cat, id_central, id_ciudad_res, email, telefono_movil) 
+    VALUES ('rpa11458', '89654725H', '4265987264', 'Raul', 'Perez Espinoza Mar', '3', '4', '1', 'raupe@gmail.com', '+34667526387'); 
+
+
+/* b. Un disparador que al añadir una cuota sindical, verifique que la cuota
+(número) es positivo. */
+DELIMITER //
+CREATE TRIGGER verificar_cuota_sindical BEFORE INSERT ON sindicato FOR EACH ROW
+BEGIN
+    declare cuota FLOAT;
+    declare mensaje_de_error VARCHAR(80);
+    SET cuota = NEW.cuota;
+    IF (cuota <= 0) THEN
+        SET  mensaje_de_error = CONCAT('Verificar_Cuota_Sindical: Error, cuota sindical no es positiva. Cuota: ', CAST(cuota AS CHAR));
+        SIGNAL sqlstate '45000' SET message_text = mensaje_de_error;
+    END IF;
+END
+//
+
+INSERT INTO sindicato (nombre_sindicato, cuota) VALUES ('Ficticio', -40.5);
+
+
+/* c. Un disparador que al eliminar una titulación, copie esta titulación en otra
+tabla (esta tabla deberá ser creada por vosotros). */
+CREATE TABLE IF NOT EXISTS titulaciones_eliminadas (
+        codigo_empleado VARCHAR(8) NOT NULL,
+        id_titulo INT NOT NULL,
+        PRIMARY KEY (codigo_empleado),
+        FOREIGN KEY (codigo_empleado) REFERENCES empleado (codigo_empleado) ON UPDATE CASCADE ON DELETE CASCADE,
+        FOREIGN KEY (id_titulo) REFERENCES titulo (id) ON UPDATE CASCADE ON DELETE CASCADE);
+
+
+DELIMITER //
+CREATE TRIGGER salvaTitulacionesEliminadas BEFORE DELETE ON titulacion FOR EACH ROW
+BEGIN
+    INSERT INTO titulaciones_eliminadas (codigo_empleado, id_titulo) VALUES (OLD.codigo_empleado, OLD.id_titulo);
+END;
+//
+
+DELETE FROM titulacion WHERE codigo_empleado LIKE 'crl38160';
+SELECT * FROM titulaciones_eliminadas;
